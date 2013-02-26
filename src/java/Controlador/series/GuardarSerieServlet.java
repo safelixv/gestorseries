@@ -46,7 +46,7 @@ public class GuardarSerieServlet extends HttpServlet {
             serie.setTemporadas(Integer.parseInt(temporadas));
             serie.setCapitulos(Integer.parseInt(capitulos));
             serie.setAño(Integer.parseInt(anyo));                                             
-            DAOSeries.nuevaSerie(serie);
+            DAOSeries.guardarSerie(serie);
             RequestDispatcher d = request.getRequestDispatcher("index.jsp");
             d.forward(request, response);
         } finally {

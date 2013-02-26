@@ -63,7 +63,7 @@ public class DAOSeries {
         return serie;
     }
 
-    public static void editarSerie(Serie serie) {
+    public static void actualizarSerie(Serie serie) {
         try {
             Mysql.conexion();
             Mysql.updateOne(serie.getId(), "series", "nombre_serie", serie.getNombre());
@@ -88,7 +88,7 @@ public class DAOSeries {
         }
     }
 
-    public static void nuevaSerie(Serie serie) {
+    public static void guardarSerie(Serie serie) {
         try {
             String sqlinsertar = "Insert into series(nombre_serie,canal,temporadas,capitulos,año) VALUES ('" + serie.getNombre() + "','" + serie.getCanal() + "','" + serie.getTemporadas() + "','" + serie.getCapitulos() + "','" + serie.getAño() + "')";
             Mysql.conexion();

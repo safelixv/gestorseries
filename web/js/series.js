@@ -255,7 +255,19 @@ function ver_actores_serie(id){
                 tabla +=            "<a class='btn agregar_actor_serie' href=\"#myModal\" data-toggle=\"modal\" data-id-serie="+id+"><i class='icon-eye-open'></i> <strong>Agregar Actor</strong></a>"
                 tabla +=        "</td>"      
                 tabla +=  "</tr>"   
-                    
+            
+            
+                tabla += "<tr>"
+                tabla +=  "<div>" 
+                tabla +=         "<form>"  
+                tabla +=               "<td>"
+                tabla +=                         "<input type='checkbox' name='vehicle' value='Bike'>I have a bike<br>"
+                tabla +=                         "<input type='checkbox' name='vehicle' value='Car'>I have a car<br>"
+                tabla +=                          "<input type='submit' value='Submit'>"
+                tabla +=                "</td>" 
+                tabla +=          "</form>" 
+                tabla +=  "</div>"  
+                tabla += "</tr>"
                 tabla +=    "</table>"; 
             
             }
@@ -278,6 +290,6 @@ function ver_actores_serie(id){
     
            
 
+//http://www.emenia.es/lista-desplegable-y-plegable-con-jquery/
 
-
-
+// http://www.jqueryeasy.com/2012/05/19/filtrar-y-ordenar-una-tabla-mysql-con-ajax/
