@@ -31,9 +31,9 @@ function listado_series(){
                 tabla +=        "</td>"  
                 
                 tabla +=        "<td>"
-                tabla +=        "<a class='btn ver_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
-                tabla +=        "<a class='btn editar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
-                tabla +=        "<a class='btn eliminar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
+                tabla +=            "<a class='btn ver_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
+                tabla +=            "<a class='btn editar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
+                tabla +=            "<a class='btn eliminar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
                 tabla +=        "</td>"    
                 
                 tabla +=        "<td>"
@@ -89,19 +89,20 @@ function detalle_serie(id){
             }else{                    
                 $("#modal_cuerpo").empty();                 
                 $("#modal_cuerpo").append(                            
-                    "<div class='grande-datos'>",                            
-                    "<div class='info-datos'>",                   
-                    "<strong class='text-success'>Id: "+serie.id+"</strong><br>",
-                    "<strong class='text-success'>Nombre: "+serie.nombre+"</strong><br>",
-                    "<strong class='text-success'>Canal: "+serie.canal+"</strong><br>",
-                    "<strong class='text-success'>Numero de Temporadas: "+serie.tempordas+"</strong><br>",
-                    "<strong class='text-success'>Numero de Capitulos: "+serie.capitulos+"</strong><br>",
-                    "<strong class='text-success'>Año: "+serie.año+"</strong>",
-                    "</div>",
+                    "<div class='grande-datos'>",   
+                    
+                        "<div class='info-datos'>",                   
+                            "<strong class='text-success'>Id: "+serie.id+"</strong><br>",
+                            "<strong class='text-success'>Nombre: "+serie.nombre+"</strong><br>",
+                            "<strong class='text-success'>Canal: "+serie.canal+"</strong><br>",
+                            "<strong class='text-success'>Numero de Temporadas: "+serie.tempordas+"</strong><br>",
+                            "<strong class='text-success'>Numero de Capitulos: "+serie.capitulos+"</strong><br>",
+                            "<strong class='text-success'>Año: "+serie.año+"</strong>",
+                        "</div>",
 
-                    "<div>",
-                    "<img src='img/himym.jpg' class='img-polaroid foto-serie'>",
-                    "</div>", 
+                        "<div>",
+                            "<img src='img/himym.jpg' class='img-polaroid foto-serie'>",
+                        "</div>", 
 
                     "</div>"
                     );      
@@ -156,21 +157,21 @@ function editar_serie(id){
                  
                 "<form action='ActualizarSerieServlet' name='actualiza_serie_form'>"+ 
                     
-                "<input name='id' type='hidden' value='"+serie.id+"'/>"+                    									 
-                "<label>Nombre</label>"+  
-                "<input name='nombre' type='text' value='"+serie.nombre+"' class='input-large'/>"+  											 
-                "<label>Canal</label>"+  
-                "<input name='canal' type='text' value='"+serie.canal+"' class='input-large'/>"+ 											 
-                "<label>Numero de Temporadas</label>"+  
-                "<input name='temporadas' type='text' value='"+serie.temporadas+"' class='input-large'/>"+  											 
-                "<label>Numero de Capitulos</label>"+  
-                "<input name='capitulos' type='text' value='"+serie.capitulos+"' class='input-large'/>"+							 
-                "<label>Año</label>"+  
-                "<input name='anyo' type='text' value='"+serie.año+"' class='input-large'/>"+ 
-                    
-                "<div>"+  
-                "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
-                "</div>"+          
+                    "<input name='id' type='hidden' value='"+serie.id+"'/>"+                    									 
+                    "<label>Nombre</label>"+  
+                    "<input name='nombre' type='text' value='"+serie.nombre+"' class='input-large'/>"+  											 
+                    "<label>Canal</label>"+  
+                    "<input name='canal' type='text' value='"+serie.canal+"' class='input-large'/>"+ 											 
+                    "<label>Numero de Temporadas</label>"+  
+                    "<input name='temporadas' type='text' value='"+serie.temporadas+"' class='input-large'/>"+  											 
+                    "<label>Numero de Capitulos</label>"+  
+                    "<input name='capitulos' type='text' value='"+serie.capitulos+"' class='input-large'/>"+							 
+                    "<label>Año</label>"+  
+                    "<input name='anyo' type='text' value='"+serie.año+"' class='input-large'/>"+ 
+
+                    "<div>"+  
+                        "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
+                    "</div>"+          
                     
                 "</form>";                                
                 $("#modal_cuerpo").append(form);      
@@ -194,20 +195,20 @@ function crear_serie()
     var form =
         
     "<form action='GuardarSerieServlet'>"+     
-    "<label>Nombre</label>"+  
-    "<input name='nombre' type='text' class='input-large'/>"+  											 
-    "<label>Canal</label>"+  
-    "<input name='canal' type='text' class='input-large'/>"+ 											 
-    "<label>Numero de Temporadas</label>"+  
-    "<input name='temporadas' type='text' class='input-large'/>"+  											 
-    "<label>Numero de Capitulos</label>"+  
-    "<input name='capitulos' type='text' class='input-large'/>"+							 
-    "<label>Año</label>"+  
-    "<input name='anyo' type='text' class='input-large'/>"+ 
+        "<label>Nombre</label>"+  
+        "<input name='nombre' type='text' class='input-large'/>"+  											 
+        "<label>Canal</label>"+  
+        "<input name='canal' type='text' class='input-large'/>"+ 											 
+        "<label>Numero de Temporadas</label>"+  
+        "<input name='temporadas' type='text' class='input-large'/>"+  											 
+        "<label>Numero de Capitulos</label>"+  
+        "<input name='capitulos' type='text' class='input-large'/>"+							 
+        "<label>Año</label>"+  
+        "<input name='anyo' type='text' class='input-large'/>"+ 
 
-    "<div>"+  
-    "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
-    "</div>"+ 
+        "<div>"+  
+            "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
+        "</div>"+ 
 
     "</form>"; 
 

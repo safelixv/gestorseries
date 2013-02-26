@@ -48,7 +48,7 @@ public class ActualizarSerieServlet extends HttpServlet {
         serie.setTemporadas(Integer.parseInt(temporadas));
         serie.setCapitulos(Integer.parseInt(capitulos));
         serie.setAño(Integer.parseInt(anyo));
-        DAOSeries.actualizarSerie(serie);
+        DAOSeries.editarSerie(serie);
         RequestDispatcher d = request.getRequestDispatcher("index.jsp");
         d.forward(request, response);        
         out.flush();

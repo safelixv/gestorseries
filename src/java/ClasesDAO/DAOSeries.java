@@ -21,6 +21,7 @@ public class DAOSeries {
 
 //SELECT * FROM actores WHERE id = 2
     public static ArrayList<Serie> getSeries() {
+        
         ArrayList<Serie> listaSeries = new ArrayList<>();
         try {
             Mysql.conexion();
@@ -63,7 +64,7 @@ public class DAOSeries {
         return serie;
     }
 
-    public static void actualizarSerie(Serie serie) {
+    public static void editarSerie(Serie serie) {
         try {
             Mysql.conexion();
             Mysql.updateOne(serie.getId(), "series", "nombre_serie", serie.getNombre());
@@ -88,7 +89,7 @@ public class DAOSeries {
         }
     }
 
-    public static void guardarSerie(Serie serie) {
+    public static void nuevaSerie(Serie serie) {
         try {
             String sqlinsertar = "Insert into series(nombre_serie,canal,temporadas,capitulos,año) VALUES ('" + serie.getNombre() + "','" + serie.getCanal() + "','" + serie.getTemporadas() + "','" + serie.getCapitulos() + "','" + serie.getAño() + "')";
             Mysql.conexion();
