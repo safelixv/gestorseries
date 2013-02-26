@@ -1,0 +1,54 @@
+body{
+    width: 65%;
+    margin-left: 15%;
+    background-color: #F7F7F7;
+        
+}
+
+#divtabla{
+    text-align: center;
+    
+}
+
+.btn{
+    
+    margin-right: 1%;
+}
+
+
+#tab{
+ /*   margin-left: 11%;  */
+    
+}
+
+ <!-- ESTILOS DE LA TABLA MODAL VER -->
+ 
+.grande-datos{
+    background-color: #F7F7F7;
+    margin: 1px solid grey;
+    alignment-adjust: central;
+}
+
+#div4{
+  margin-left: 11%;
+ 
+}
+
+.info-datos{
+    margin-left: 49%;
+    margin-top: 3%;
+}
+
+.foto-serie{
+    height: 19%;
+    margin-left: 58%;
+    margin-top: -27%;
+    width: 20%;
+}
+
+
+
+#lista-actores{
+    
+    
+}
