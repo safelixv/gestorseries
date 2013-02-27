@@ -1,9 +1,8 @@
 function listado_series(){        
-    $("#divtabla").empty(); 
+    $("#divtabla").empty();       
     $.ajax({        
         url: 'Servlet?id=all',
-        dataType: "json",
-       
+        dataType: "json",       
         type: "GET",
         success:function(series){		            
             
@@ -50,17 +49,7 @@ function listado_series(){
             tabla +=   "</a>"
             
             
-            tabla +=           "<div class='pagination'>"
-            tabla +=           "<ul>"
-            tabla +=           "<li><a href='#'>Prev</a></li>"
-            tabla +=           "<li><a href='#'>1</a></li>"
-            tabla +=           "<li><a href='#'>2</a></li>"
-            tabla +=           "<li><a href='#'>3</a></li>"
-            tabla +=           "<li><a href='#'>4</a></li>"
-            tabla +=           "<li><a href='#'>5</a></li>"
-            tabla +=           "<li><a href='#'>Next</a></li>"
-            tabla +=          " </ul>"
-            tabla +=         " </div>"
+       //     tabla +=  getNeighborhood("Servlet", page_number, total_pages, neighborhood) 
         
         
             
@@ -133,7 +122,28 @@ function detalle_serie(id){
         }            
     });    
 }
-
+function eliminar_actor_serie(id_serie,id_actor){ 
+     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
+    $.ajax({                    
+        url: 'EliminarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
+        dataType: 'text',
+        type: "POST",
+        success: 
+        function(text){                        
+            $("#modal_cuerpo").empty(); 
+            $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
+            listado_series();
+        },      
+        error: function(){                
+            if(id ==""){                    
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+            }
+        }            
+    });  
+ 
+    
+}
 
 function eliminar_serie(id){   
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
@@ -317,20 +327,11 @@ function ver_actores_serie(id){
                 tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
                 tabla +=          "</tr>"
                 tabla +=          "</tbody>"
-                tabla +=          "</table>"
-                
-                tabla +=                "<input type='submit' value='Submit'>"
-                
-                tabla +=          "</form>" 
-             
-                
+                tabla +=          "</table>"                
+                tabla +=                "<input type='submit' value='Submit'>"              
+                tabla +=          "</form>"                              
                 tabla +=  "</div>"  
-                
-                
-                
-                
-            
-            
+                                                                                        
             }
             
             
@@ -368,7 +369,45 @@ function ver_actores_serie(id){
     });            
 }        
     
-           
+function getNeighborhood(link,  page_number, total_pages, neighborhood) { 
+    page_number=parseInt(page_number);
+    total_pages=parseInt(total_pages);
+    neighborhood=parseInt(neighborhood);
+    vector = "<div class=\"pagination\"><ul>";
+    if (page_number > 1)
+        vector+=("<li><a class=\"pagination_link\" id=\"" + (page_number - 1) + "\" href=\"" + link + (page_number - 1) + "\">prev</a></li>");
+    if (page_number > neighborhood + 1)
+        vector+=("<li><a class=\"pagination_link\" id=\"1\" href=\"" + link + "1\">1</a></li>");
+    if (page_number > neighborhood + 2)
+        vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
+    for (i = (page_number - neighborhood); i <= (page_number + neighborhood); i++){
+        if (i >= 1 && i <= total_pages){
+            if (page_number == i){
+                vector+=("<li class=\"active\"><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link +     i + "\">" + i + "</a></li>");
+            }            
+            else
+                vector+=("<li><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link + i + "\">" + i + "</a></li>");
+        }
+    }
+    if (page_number < total_pages - (neighborhood + 1))
+        vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
+    if (page_number < total_pages - (neighborhood))
+        vector+=("<li><a class=\"pagination_link\" id=\"" + total_pages + "\" href=\"" + link + total_pages + "\">" + total_pages + "</a></li>");
+    if (page_number < total_pages)
+        vector+=("<li><a class=\"pagination_link\"  id=\"" + (page_number + 1) + "\" href=\"" + link + (page_number + 1) + "\">next</a></li>");        
+    vector += "</ul></div>";
+    return vector;
+}           
+
+function ajaxCallSync(url, type, data) {
+        return $.ajax({
+            type: type,
+            url: url,
+            data: data,
+            timeout: 30000
+        });       
+}; 
+
 
 //http://www.emenia.es/lista-desplegable-y-plegable-con-jquery/
 

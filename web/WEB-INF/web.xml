@@ -40,13 +40,29 @@
         <servlet-name>SeriesActorServlet</servlet-name>
         <servlet-class>Controlador.series.actores.SeriesActorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarActorSerieServlet</servlet-name>
+        <servlet-class>Controlador.series.EliminarActorSerieServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ActualizarSerieServlet</servlet-name>
+        <url-pattern>/ActualizarSerieServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarSerieServlet</servlet-name>
+        <url-pattern>/EliminarSerieServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ServletActores</servlet-name>
         <url-pattern>/ServletActores</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GuardarSerieServlet</servlet-name>
+        <url-pattern>/GuardarSerieServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ActualizarActorServlet</servlet-name>
@@ -67,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>SeriesActorServlet</servlet-name>
         <url-pattern>/SeriesActorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarActorSerieServlet</servlet-name>
+        <url-pattern>/EliminarActorSerieServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

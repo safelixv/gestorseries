@@ -123,4 +123,15 @@ public class DAOSeries {
         }
         return listaActores;
     }
+
+    public static void eliminarActorSerie(String serieId, String actorId) {
+        try {
+            Mysql.conexion();
+            ResultSet rs = Mysql.execSQL("SELECT id FROM SERIES_ACTORES WHERE id_serie = "+serieId+" and id_actor = "+actorId);
+            Mysql.removeOne(rs.getInt("id"),"SERIES_ACTORES");            
+            Mysql.desconexion();
+        } catch (Exception ex) {
+            Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
