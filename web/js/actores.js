@@ -139,7 +139,7 @@ function eliminar_actor(id){
         function(text){                        
             $("#modal_cuerpo").empty(); 
             $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
-            listado_series();
+            listado_actores();
         },      
         error: function(){                
             if(id ==""){                    

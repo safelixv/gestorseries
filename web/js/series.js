@@ -1,84 +1,69 @@
-function listado_series(){        
-    $("#divtabla").empty();       
-    $.ajax({        
-        url: 'Servlet?id=all',
-        dataType: "json",       
-        type: "GET",
-        success:function(series){		            
-            
-            var tabla=      "<table class='tablaserie table-bordered table-hover'>"
-            tabla += "<tr>"
-            tabla +=       "<th>Id</th>"
-            tabla +=       "<th>Nombre Serie</th>"
-            tabla +=       "<th>Año</th>"
-            tabla +=       "<th>Opciones</th>"
-            tabla +=       "<th>Actores</th>"
-            tabla += "</tr>";   
-            
-            $.each(series, function(index, serie) {
-                tabla += "<tr>"                
-                tabla +=        "<td>"
-                tabla +=            "<p>" +serie.id+"</p>"
-                tabla +=        "</td>" 
+function listado_series(pageNumber){              
+    var records=$.getValues("Servlet?id=getpages");
+    var pages= $.getValues("Servlet?id=getpages");
+    var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
+    var tabla=      "<table class='tablaserie table-bordered table-hover'>"
+    tabla += "<tr>"
+    tabla +=       "<th>Id</th>"
+    tabla +=       "<th>Nombre Serie</th>"
+    tabla +=       "<th>Año</th>"
+    tabla +=       "<th>Opciones</th>"
+    tabla +=       "<th>Actores</th>"
+    tabla += "</tr>";               
+    $.each(series, function(index, serie) {
+        tabla += "<tr>"                
+        tabla +=        "<td>"
+        tabla +=            "<p>" +serie.id+"</p>"
+        tabla +=        "</td>" 
                 
-                tabla +=        "<td>"
-                tabla +=             "<p>" +serie.nombre+"</p>"
-                tabla +=        "</td>" 
+        tabla +=        "<td>"
+        tabla +=             "<p>" +serie.nombre+"</p>"
+        tabla +=        "</td>" 
                 
-                tabla +=        "<td>"
-                tabla +=             "<p>" +serie.año+"</p>"
-                tabla +=        "</td>"  
+        tabla +=        "<td>"
+        tabla +=             "<p>" +serie.año+"</p>"
+        tabla +=        "</td>"  
                 
-                tabla +=        "<td>"
-                tabla +=            "<a class='btn ver_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
-                tabla +=            "<a class='btn editar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
-                tabla +=            "<a class='btn eliminar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
-                tabla +=        "</td>"    
+        tabla +=        "<td>"
+        tabla +=            "<a class='btn ver_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
+        tabla +=            "<a class='btn editar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
+        tabla +=            "<a class='btn eliminar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
+        tabla +=        "</td>"    
                 
-                tabla +=        "<td>"
-                tabla +=             "<a class='btn ver_actores_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>Actores</strong></a>"
-                tabla +=        "</td>"                                      
-                tabla +=  "</tr>";                   
-            });     
-            
-            tabla +=    "</table>"; 
-           
-            tabla +=   "<a class='btn nueva_serie' href=\"#myModal\" data-toggle=\"modal\">"
-            tabla +=       "<i class='icon-plus'></i>"
-            tabla +=       "<strong>Nueva Serie</strong>"
-            tabla +=   "</a>"
-            
-            
-       //     tabla +=  getNeighborhood("Servlet", page_number, total_pages, neighborhood) 
-        
-        
-            
-        
+        tabla +=        "<td>"
+        tabla +=             "<a class='btn ver_actores_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>Actores</strong></a>"
+        tabla +=        "</td>"                                      
+        tabla +=  "</tr>";                   
+    });     
+    
+    tabla +=    "</table>"; 
+
+    tabla +=   "<a class='btn nueva_serie' href=\"#myModal\" data-toggle=\"modal\">"
+    tabla +=       "<i class='icon-plus'></i>"
+    tabla +=       "<strong>Nueva Serie</strong>"
+    tabla +=   "</a>"
             
             
-            $("#divtabla").append(tabla);                                         
-            $(".ver_serie").click(function(){                
-                detalle_serie($(this).data('id'))                        
-            });                 
-            $(".editar_serie").click(function(){
-                editar_serie($(this).data('id'))       
-            });        
-            $(".eliminar_serie").click( function(){
-                eliminar_serie($(this).data('id'))
-            });
-            $(".ver_actores_serie").click( function(){
-                ver_actores_serie($(this).data('id'))
-            });
-            $(".nueva_serie").click( function(){
-                crear_serie()
-            });
-        },                                      
-        error: function(){                
-            alert("ERROR 1");
-                        
-        }            
+    tabla +=  getNeighborhood("?pagenumber=", pageNumber, pages, 10); 
+    
+    $("#divtabla").empty();
+    $("#divtabla").append(tabla);                                                      
+    $(".ver_serie").click(function(){                
+        detalle_serie($(this).data('id'))                        
+    });                 
+    $(".editar_serie").click(function(){
+        editar_serie($(this).data('id'))       
+    });        
+    $(".eliminar_serie").click( function(){
+        eliminar_serie($(this).data('id'))
     });
-     
+    $(".ver_actores_serie").click( function(){
+        ver_actores_serie($(this).data('id'))
+    });
+    $(".nueva_serie").click( function(){
+        crear_serie()
+    });
+    
 }
 
 function detalle_serie(id){            
@@ -123,7 +108,7 @@ function detalle_serie(id){
     });    
 }
 function eliminar_actor_serie(id_serie,id_actor){ 
-     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
+    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
     $.ajax({                    
         url: 'EliminarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
         dataType: 'text',
@@ -132,7 +117,7 @@ function eliminar_actor_serie(id_serie,id_actor){
         function(text){                        
             $("#modal_cuerpo").empty(); 
             $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
-            listado_series();
+            listado_series(0);
         },      
         error: function(){                
             if(id ==""){                    
@@ -155,7 +140,7 @@ function eliminar_serie(id){
         function(text){                        
             $("#modal_cuerpo").empty(); 
             $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
-            listado_series();
+            listado_series(0);
         },      
         error: function(){                
             if(id ==""){                    
@@ -335,7 +320,7 @@ function ver_actores_serie(id){
             }
             
             
-            
+      
             $("#modal_cuerpo").append(tabla);                                         
             $(".agregar_actor_serie").click(function(){                
                 agregar_actor_serie($(this).data('id')) 
@@ -400,14 +385,39 @@ function getNeighborhood(link,  page_number, total_pages, neighborhood) {
 }           
 
 function ajaxCallSync(url, type, data) {
-        return $.ajax({
-            type: type,
-            url: url,
-            data: data,
-            timeout: 30000
-        });       
+    var result;
+    $.ajax({
+        type: type,
+        url: url,
+        datatype: 'json',
+        timeout: 30000,
+        success: function(data2){
+            result=data2;
+        }
+    }            
+    );       
+    return {
+        getResult : function(){
+            if (result) return result;
+        }
+    };
 }; 
 
+jQuery.extend({
+    getValues: function(url) {
+        var result = null;
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                result = data;
+            }
+        });
+        return result;
+    }
+});
 
 //http://www.emenia.es/lista-desplegable-y-plegable-con-jquery/
 

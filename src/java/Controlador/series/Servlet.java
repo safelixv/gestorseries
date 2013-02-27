@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author al036309 - Sofia Felix
  */
 public class Servlet extends HttpServlet {
-
+    private static Integer numeroPaginas=5;
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -44,7 +44,7 @@ public class Servlet extends HttpServlet {
             String json = gson.toJson(oListaSeries);
             out.print(json);
         }         
-        else {
+        if (id.matches("%d")){       
             int idInt = Integer.parseInt(id);
             Serie serie = DAOSeries.getSerie(idInt);
             try {
@@ -64,13 +64,13 @@ public class Servlet extends HttpServlet {
             
             List<Pojos.Serie> oListaSeries = new ArrayList<>();            
             oListaSeries = DAOSeries.getSeries();            
-            out.print(gson.toJson(oListaSeries.size()/3)); 
+            out.print(gson.toJson(oListaSeries.size()/numeroPaginas)); 
         }
         if (id.equalsIgnoreCase("getpage")){
             Integer page = Integer.parseInt(request.getParameter("page"));
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
             oListaSeries = DAOSeries.getSeries();            
-            List<Serie> listaSeries = oListaSeries.subList((page*3)-3,(page*3));            
+            List<Serie> listaSeries = oListaSeries.subList((page*numeroPaginas)-numeroPaginas,(page*numeroPaginas));            
             String json = gson.toJson(listaSeries);
             out.print(json);            
         }
