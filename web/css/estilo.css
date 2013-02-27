@@ -2,33 +2,48 @@ body{
     width: 65%;
     margin-left: 15%;
     background-color: #F7F7F7;
-        
+
 }
 
 #divtabla{
     text-align: center;
-    
+    background-color: white;
+
 }
 
 .btn{
-    
+
     margin-right: 1%;
 }
 
-.boxes{
+
+.nueva_serie, .nuevo_actor {
+
+    margin: 10px 0px 10px 0px;
+
+    float: left;
+    margin-left: 21%;
+    margin-top: 17px;
+}
+
+
+.checkboxes{
     
-    margin-top: 15%;
+    margin-left: -4%;
+    width: 100%;
     
 }
+
+
 
 
 #tab{
- /*   margin-left: 11%;  */
-    
+    /*   margin-left: 11%;  */
+
 }
 
- <!-- ESTILOS DE LA TABLA MODAL VER -->
- 
+<!-- ESTILOS DE LA TABLA MODAL VER -->
+
 .grande-datos{
     background-color: #F7F7F7;
     margin: 1px solid grey;
@@ -36,8 +51,8 @@ body{
 }
 
 #div4{
-  margin-left: 11%;
- 
+    margin-left: 11%;
+
 }
 
 .info-datos{
@@ -55,6 +70,6 @@ body{
 
 
 #lista-actores{
-    
-    
+
+
 }

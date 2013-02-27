@@ -10,6 +10,7 @@ import conexion.Mysql;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -99,5 +100,30 @@ public class DAOActores {
             Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+
+
+    public static List<Serie> getSeriesActor(String id) {
+        ArrayList<Serie> listaSeries = new ArrayList<>();
+        try {
+            Mysql.conexion();
+            ResultSet rs = Mysql.execSQL("SELECT * FROM actores,series_actores where series.id=id_serie AND id_actor ="+id);
+            do {
+                Serie serie=new Serie();
+                serie.setId(rs.getInt("id"));
+                serie.setNombre(rs.getString("nombre_serie"));
+                serie.setCanal(rs.getString("canal"));
+                serie.setTemporadas(rs.getInt("temporadas"));
+                serie.setCapitulos(rs.getInt("capitulos"));
+                serie.setAño(rs.getInt("año"));
+                listaSeries.add(serie);
+            } while (rs.next());
+            rs.close();
+            Mysql.desconexion();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaSeries;
     }
 }

@@ -1,5 +1,5 @@
 function listado_actores(){
-     $("#divtabla").empty(); 
+    $("#divtabla").empty(); 
     $.ajax({        
         url: 'ServletActores?id=all',
         dataType: "json",
@@ -7,7 +7,7 @@ function listado_actores(){
         type: "GET",
         success:function(actores){            
             
-            var tabla=      "<table class='table table-hover'>"
+            var tabla=      "<table class='table-bordered table-hover'>"
             tabla += "<tr>"
             tabla +=       "<th>Id</th>"
             tabla +=       "<th>Nombre Actor</th>"
@@ -41,18 +41,29 @@ function listado_actores(){
                 tabla +=        "</td>"
                 
                 tabla +=  "</tr>";   
-            });    
+            });   
             
-                        tabla +=  "<tr>";   
-            tabla +=        "<td>"
-            tabla +=        "<a class='btn nuevo_actor' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-eye-open'></i> <strong>Nuevo Actor</strong></a>"
-            tabla +=        "</td>"      
-            tabla +=  "</tr>";   
-            tabla +=    "</table>";  
+            tabla +=    "</table>"; 
+            
+        
+            tabla +=        "<a class='btn nuevo_actor' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-plus'></i> <strong>Nuevo Actor</strong></a>"
+                
+           
+            tabla +=           "<div class='pagination'>"
+            tabla +=           "<ul>"
+            tabla +=           "<li><a href='#'>Prev</a></li>"
+            tabla +=           "<li><a href='#'>1</a></li>"
+            tabla +=           "<li><a href='#'>2</a></li>"
+            tabla +=           "<li><a href='#'>3</a></li>"
+            tabla +=           "<li><a href='#'>4</a></li>"
+            tabla +=           "<li><a href='#'>5</a></li>"
+            tabla +=           "<li><a href='#'>Next</a></li>"
+            tabla +=          " </ul>"
+            tabla +=         " </div>"
            
                  
             
-             $("#divtabla").append(tabla);                                         
+            $("#divtabla").append(tabla);                                         
             $(".ver_actor").click(function(){                
                 ver_actor($(this).data('id'))                        
             });                 
@@ -61,6 +72,9 @@ function listado_actores(){
             });        
             $(".eliminar_actor").click( function(){
                 eliminar_actor($(this).data('id'))
+            });
+            $(".ver_series_actor").click( function(){
+                ver_actores_serie($(this).data('id'))
             });
             $(".nuevo_actor").click( function(){
                 nuevo_actor()
@@ -74,7 +88,7 @@ function listado_actores(){
     
 }
     
-    function ver_actor(id){         
+function ver_actor(id){         
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");    
     $.ajax({                    
         url: 'ServletActores?id='+id, 
@@ -186,112 +200,120 @@ function editar_actor(id){
 
 function nuevo_actor()
 {        
-            $("#modal_cuerpo").empty();    
-            var form=
-            "<form action='GuardarActorServlet'>"+             
-                "<label>Nombre</label>"+  
-                "<input name='nombre' type='text' class='input-large'/>"+  											 
-                "<label>Apellido 1:</label>"+  
-                "<input name='ape1' type='text' class='input-large'/>"+ 											 
-                "<label>Apellido 2:</label>"+  
-                "<input name='ape2' type='text' class='input-large'/>"+  											 
-                "<label>Fecha de Nacimiento:</label>"+  
-                "<input name='fecha' type='text' class='input-large'/>"+							 
-                "<label>Lugar de Nacimiento:</label>"+  
-                "<input name='lugar' type='text' class='input-large'/>"+ 
-                "<div>"+  
-                    "<button name='save-actor' type='submit' class='btn btn-primary'>Submit</input>"+  
-                "</div>"+ 
+    $("#modal_cuerpo").empty();    
+    var form=
+    "<form action='GuardarActorServlet'>"+             
+    "<label>Nombre</label>"+  
+    "<input name='nombre' type='text' class='input-large'/>"+  											 
+    "<label>Apellido 1:</label>"+  
+    "<input name='ape1' type='text' class='input-large'/>"+ 											 
+    "<label>Apellido 2:</label>"+  
+    "<input name='ape2' type='text' class='input-large'/>"+  											 
+    "<label>Fecha de Nacimiento:</label>"+  
+    "<input name='fecha' type='text' class='input-large'/>"+							 
+    "<label>Lugar de Nacimiento:</label>"+  
+    "<input name='lugar' type='text' class='input-large'/>"+ 
+    "<div>"+  
+    "<button name='save-actor' type='submit' class='btn btn-primary'>Submit</input>"+  
+    "</div>"+ 
             
-            "</form>";      
+    "</form>";      
         
-            $("#modal_cuerpo").append(form);      
+    $("#modal_cuerpo").append(form);      
 }      
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            /*
-            
-            $("#divtabla").append(tabla); 
-            $(".editar_actor").click(function() {                 
-    
-                var oIDa = $(this).attr("id");  
-                $("#div4").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");
-                $.ajax({   
-                 
-                    url: 'ServletActores?id='+oIDa,
-                    dataType: 'json',
-                    type: "GET",
-                    success: 
-                    function(actor){
-                    
-            
-                        if(actor.id == 0){
-                            $("#div4").empty(); 
-                            $("#div4").append("<p>El id no existe.</p>");
+      
+function ver_series_actor(id){
+    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");    
+    $.ajax({                    
+        url: 'ActoresSerieServlet?id='+id, 
+        dataType: 'json',
+        type: "GET",
+        success: 
+        function(actores){                                
+            if(actores.length == 0){
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>La serie no tiene actores</p>");                
+            }else{    
+                $("#modal_cuerpo").empty();                
+                var tabla=      "<table class='tablaactores table table-hover'>"
+                tabla += "<tr>"
+                tabla +=       "<th>Id</th>"
+                tabla +=       "<th>Nombre</th>"
+                tabla +=       "<th>Año</th>"    
+                tabla +=       "<th>Opciones</th>" 
+                tabla += "</tr>"          
+                $.each(actores, function(index, serie) {
+                   
+                    tabla += "<tr>"                
+                    tabla +=        "<td>"
+                    tabla +=            "<p>" +serie.id+"</p>"
+                    tabla +=        "</td>"                   
+                    tabla +=        "<td>"
+                    tabla +=            "<p>" +serie.nombre+"</p>"
+                    tabla +=        "</td>"                                                         
+                    tabla +=        "<td>"
+                    tabla +=            "<p>" +serie.año+"</p>"
+                    tabla +=        "</td>"
+                    tabla +=        "<td>"
+                    tabla +=          "<a class='btn eliminar_serie_actor' href=\"#myModal\" data-toggle=\"modal\" data-actor_id="+id+" data-serie_id="+serie.id+"><strong>Eliminar</strong></a>"
+                    tabla +=        "</td>"
+                    tabla += "</tr>"   
+                  
+                });
                 
-                        }else{                    
-                            $("#div4").empty(); 
-                            $("#div4").append(
-                                                 
-                                "<form id='tab'>", 
-                              //  "<h2> Edicion de Actores </h2>"
-                                
-                                "<label>ID</label>",  
-                                "<input type='text' value='"+actor.id+"' class='input-large'>",  
-											 
-                                "<label>Nombre</label>",  
-                                "<input type='text' value='"+actor.nombre+"' class='input-large'>",  
-											 
-                                "<label>Canal</label>",  
-                                "<input type='text' value='"+actor.ape1+"' class='input-large'>", 
-											 
-                                "<label>Numero de Temporadas</label>",  
-                                "<input type='text' value='"+actor.ape2+"' class='input-large'>",  
-											 
-                                "<label>Numero de Capitulos</label>",  
-                                "<input type='text' value='"+actor.fecha_nac+"' class='input-large'>",
-											 
-                                "<label>Año</label>",  
-                                "<input type='text' value='"+actor.lugar_nac+"' class='input-large'>", 
-
-                                "<div>",  
-                                "<button class='btn btn-primary'>Guardar</button>",  
-                                "</div>",  
-                                "</form>" 
-                                );      
-                        }           
-                    },      
-                    error: function(){
-                
-                        if(id ==""){                    
-                            $("#div4").empty(); 
-                            $("#div4").append("<p>Debe introducir un id.</p>");
-                    
-                        }
-                    }
+                tabla +=    "</table>"; 
             
-                });               
-         
+                tabla += "<div>"
+           
+             
+                tabla +=        "<button > Agregar Serie </button>"
+                tabla +=         "<form  class='checkboxes'>"  
+                tabla +=                "<input type='checkbox' name='vehicle' value='Bike'> I have a bike<br>"
+                tabla +=                " <input type='checkbox' name='vehicle' value='Car'> I have a car<br>"
+                tabla +=                "<input type='submit' value='Submit'>"
+                tabla +=          "</form>" 
+                tabla +=  "</div>"  
+                
+                
+                
+                
+            
+            
+            }
+            
+            
+            
+            $("#modal_cuerpo").append(tabla);                                         
+            $(".agregar_serie_actor").click(function(){                
+                agregar_serie_actor($(this).data('id')) 
+                
+            });                 
+            $(".eliminar_serie_actor").click(function(){                
+                eliminar_serie_actor($(this).data('actor_id'),$(this).data('serie_id'))
+            }); 
+            
+            
+            $(document).ready(function(){
+                $(".checkboxes").hide();
+                $("button").click(function(event){
+                    var desplegable = $(this).next();
+                    $('.checkboxes').not(desplegable).slideUp('fast');
+                    desplegable.slideToggle('fast');
+                    event.preventDefault();
+                })
             });
-        },                        
-        error: function(dato){
-            alert("ERROR  2");
+            
+            
+                     
+            
+        },      
+        error: function(){                
+            if(id ==""){                    
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+            }
         }            
-    });
-}*/
+    });            
+}        

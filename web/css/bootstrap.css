@@ -1025,7 +1025,7 @@ pre code {
 }
 
 form {
-  /* margin: 69px 154px 20px;*/
+    /* margin: 69px 154px 20px;*/
     margin: 17px 154px 20px;
 }
 
@@ -2054,6 +2054,8 @@ table {
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
+    width: 100%;
+
 }
 
 .table-bordered th,
@@ -4950,9 +4952,9 @@ input[type="submit"].btn.btn-mini {
 
 .breadcrumb > li {
     display: inline-block;
-    *display: inline;
+    display: inline;
     text-shadow: 0 1px 0 #ffffff;
-    *zoom: 1;
+    zoom: 1;
 }
 
 .breadcrumb > li > .divider {
@@ -4965,18 +4967,19 @@ input[type="submit"].btn.btn-mini {
 }
 
 .pagination {
-    margin: 20px 0;
+     margin: 17px 18% 7% 41%;
+    position: relative;
 }
 
 .pagination ul {
     display: inline-block;
-    *display: inline;
+    display: inline;
     margin-bottom: 0;
     margin-left: 0;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-    *zoom: 1;
+    zoom: 1;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -5239,10 +5242,12 @@ input[type="submit"].btn.btn-mini {
 }
 
 .modal-body {
-    position: relative;
-    max-height: 400px;
-    padding: 15px;
+    margin-left: 40px;
+    margin-right: 40px;
+    max-height: 479px;
     overflow-y: auto;
+    padding: 15px;
+    position: relative;
 }
 
 .modal-form {

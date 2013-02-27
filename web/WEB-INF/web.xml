@@ -36,6 +36,10 @@
         <servlet-name>ActoresSerieServlet</servlet-name>
         <servlet-class>Controlador.series.ActoresSerieServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SeriesActorServlet</servlet-name>
+        <servlet-class>Controlador.series.actores.SeriesActorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -59,6 +63,10 @@
     <servlet-mapping>
         <servlet-name>ActoresSerieServlet</servlet-name>
         <url-pattern>/ActoresSerieServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeriesActorServlet</servlet-name>
+        <url-pattern>/SeriesActorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

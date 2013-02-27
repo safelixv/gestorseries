@@ -33,11 +33,11 @@
         <div class="navbar navbar-inverse">
             <div class="navbar-inner">
                 <div class="container">
-                   <a class="brand" href="#">Proyecto Series</a>
+                   <a class="brand" href='#'>Proyecto Series</a>
                    <div class="navbar-inner">
                         <ul class="nav pull-right">
-                            <li><a href="#" class="lista_series"  id="lista-series">Listado Series</a></li>
-                            <li><a href="#" class="lista_actores" id="lista-actores">Listado Actores</a></li>
+                            <li><a href='#' class='lista_series'  id="lista-series">Listado Series</a></li>
+                            <li><a href='#' class="lista_actores" id="lista-actores">Listado Actores</a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
         <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 id="myModalLabel" id="modal_cabecera">Series</h4>
+                <h4 id="myModalLabel" id='modal_cabecera'>Series</h4>
                 
                 
             </div>
