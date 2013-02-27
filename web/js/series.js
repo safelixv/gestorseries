@@ -7,7 +7,7 @@ function listado_series(){
         type: "GET",
         success:function(series){		            
             
-            var tabla=      "<table class='tablaserie table table-hover'>"
+            var tabla=      "<table class='tablaserie table-bordered table-hover'>"
             tabla += "<tr>"
             tabla +=       "<th>Id</th>"
             tabla +=       "<th>Nombre Serie</th>"
@@ -40,14 +40,31 @@ function listado_series(){
                 tabla +=             "<a class='btn ver_actores_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>Actores</strong></a>"
                 tabla +=        "</td>"                                      
                 tabla +=  "</tr>";                   
-            });                
-            tabla +=  "<tr>";   
-            tabla +=        "<td>"
-            tabla +=            "<a class='btn nueva_serie' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-eye-open'></i> <strong>Nueva Serie</strong></a>"
-            tabla +=        "</td>"      
-            tabla +=  "</tr>";   
+            });     
             
             tabla +=    "</table>"; 
+           
+            tabla +=   "<a class='btn nueva_serie' href=\"#myModal\" data-toggle=\"modal\">"
+            tabla +=       "<i class='icon-plus'></i>"
+            tabla +=       "<strong>Nueva Serie</strong>"
+            tabla +=   "</a>"
+            
+            
+            tabla +=           "<div class='pagination'>"
+            tabla +=           "<ul>"
+            tabla +=           "<li><a href='#'>Prev</a></li>"
+            tabla +=           "<li><a href='#'>1</a></li>"
+            tabla +=           "<li><a href='#'>2</a></li>"
+            tabla +=           "<li><a href='#'>3</a></li>"
+            tabla +=           "<li><a href='#'>4</a></li>"
+            tabla +=           "<li><a href='#'>5</a></li>"
+            tabla +=           "<li><a href='#'>Next</a></li>"
+            tabla +=          " </ul>"
+            tabla +=         " </div>"
+        
+        
+            
+        
             
             
             $("#divtabla").append(tabla);                                         
@@ -91,18 +108,18 @@ function detalle_serie(id){
                 $("#modal_cuerpo").append(                            
                     "<div class='grande-datos'>",   
                     
-                        "<div class='info-datos'>",                   
-                            "<strong class='text-success'>Id: "+serie.id+"</strong><br>",
-                            "<strong class='text-success'>Nombre: "+serie.nombre+"</strong><br>",
-                            "<strong class='text-success'>Canal: "+serie.canal+"</strong><br>",
-                            "<strong class='text-success'>Numero de Temporadas: "+serie.tempordas+"</strong><br>",
-                            "<strong class='text-success'>Numero de Capitulos: "+serie.capitulos+"</strong><br>",
-                            "<strong class='text-success'>Año: "+serie.año+"</strong>",
-                        "</div>",
+                    "<div class='info-datos'>",                   
+                    "<strong class='text-success'>Id: "+serie.id+"</strong><br>",
+                    "<strong class='text-success'>Nombre: "+serie.nombre+"</strong><br>",
+                    "<strong class='text-success'>Canal: "+serie.canal+"</strong><br>",
+                    "<strong class='text-success'>Numero de Temporadas: "+serie.tempordas+"</strong><br>",
+                    "<strong class='text-success'>Numero de Capitulos: "+serie.capitulos+"</strong><br>",
+                    "<strong class='text-success'>Año: "+serie.año+"</strong>",
+                    "</div>",
 
-                        "<div>",
-                            "<img src='img/himym.jpg' class='img-polaroid foto-serie'>",
-                        "</div>", 
+                    "<div>",
+                    "<img src='img/himym.jpg' class='img-polaroid foto-serie'>",
+                    "</div>", 
 
                     "</div>"
                     );      
@@ -157,21 +174,21 @@ function editar_serie(id){
                  
                 "<form action='ActualizarSerieServlet' name='actualiza_serie_form'>"+ 
                     
-                    "<input name='id' type='hidden' value='"+serie.id+"'/>"+                    									 
-                    "<label>Nombre</label>"+  
-                    "<input name='nombre' type='text' value='"+serie.nombre+"' class='input-large'/>"+  											 
-                    "<label>Canal</label>"+  
-                    "<input name='canal' type='text' value='"+serie.canal+"' class='input-large'/>"+ 											 
-                    "<label>Numero de Temporadas</label>"+  
-                    "<input name='temporadas' type='text' value='"+serie.temporadas+"' class='input-large'/>"+  											 
-                    "<label>Numero de Capitulos</label>"+  
-                    "<input name='capitulos' type='text' value='"+serie.capitulos+"' class='input-large'/>"+							 
-                    "<label>Año</label>"+  
-                    "<input name='anyo' type='text' value='"+serie.año+"' class='input-large'/>"+ 
+                "<input name='id' type='hidden' value='"+serie.id+"'/>"+                    									 
+                "<label>Nombre</label>"+  
+                "<input name='nombre' type='text' value='"+serie.nombre+"' class='input-large'/>"+  											 
+                "<label>Canal</label>"+  
+                "<input name='canal' type='text' value='"+serie.canal+"' class='input-large'/>"+ 											 
+                "<label>Numero de Temporadas</label>"+  
+                "<input name='temporadas' type='text' value='"+serie.temporadas+"' class='input-large'/>"+  											 
+                "<label>Numero de Capitulos</label>"+  
+                "<input name='capitulos' type='text' value='"+serie.capitulos+"' class='input-large'/>"+							 
+                "<label>Año</label>"+  
+                "<input name='anyo' type='text' value='"+serie.año+"' class='input-large'/>"+ 
 
-                    "<div>"+  
-                        "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
-                    "</div>"+          
+                "<div>"+  
+                "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
+                "</div>"+          
                     
                 "</form>";                                
                 $("#modal_cuerpo").append(form);      
@@ -195,20 +212,20 @@ function crear_serie()
     var form =
         
     "<form action='GuardarSerieServlet'>"+     
-        "<label>Nombre</label>"+  
-        "<input name='nombre' type='text' class='input-large'/>"+  											 
-        "<label>Canal</label>"+  
-        "<input name='canal' type='text' class='input-large'/>"+ 											 
-        "<label>Numero de Temporadas</label>"+  
-        "<input name='temporadas' type='text' class='input-large'/>"+  											 
-        "<label>Numero de Capitulos</label>"+  
-        "<input name='capitulos' type='text' class='input-large'/>"+							 
-        "<label>Año</label>"+  
-        "<input name='anyo' type='text' class='input-large'/>"+ 
+    "<label>Nombre</label>"+  
+    "<input name='nombre' type='text' class='input-large'/>"+  											 
+    "<label>Canal</label>"+  
+    "<input name='canal' type='text' class='input-large'/>"+ 											 
+    "<label>Numero de Temporadas</label>"+  
+    "<input name='temporadas' type='text' class='input-large'/>"+  											 
+    "<label>Numero de Capitulos</label>"+  
+    "<input name='capitulos' type='text' class='input-large'/>"+							 
+    "<label>Año</label>"+  
+    "<input name='anyo' type='text' class='input-large'/>"+ 
 
-        "<div>"+  
-            "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
-        "</div>"+ 
+    "<div>"+  
+    "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
+    "</div>"+ 
 
     "</form>"; 
 
@@ -233,9 +250,11 @@ function ver_actores_serie(id){
                 tabla += "<tr>"
                 tabla +=       "<th>Id</th>"
                 tabla +=       "<th>Nombre</th>"
-                tabla +=       "<th>Apellido</th>"                
+                tabla +=       "<th>Apellido</th>"    
+                tabla +=       "<th>Opciones</th>" 
                 tabla += "</tr>"          
                 $.each(actores, function(index, actor) {
+                    //   tabla += "<div class='actor_serie'>"
                     tabla += "<tr>"                
                     tabla +=        "<td>"
                     tabla +=            "<p>" +actor.id+"</p>"
@@ -250,35 +269,95 @@ function ver_actores_serie(id){
                     tabla +=          "<a class='btn eliminar_actor_serie' href=\"#myModal\" data-toggle=\"modal\" data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Eliminar</strong></a>"
                     tabla +=        "</td>"
                     tabla += "</tr>"   
+                  
                 });
-                tabla +=  "<tr>"   
-                tabla +=        "<td>"
-                tabla +=            "<a class='btn agregar_actor_serie' href=\"#myModal\" data-toggle=\"modal\" data-id-serie="+id+"><i class='icon-eye-open'></i> <strong>Agregar Actor</strong></a>"
-                tabla +=        "</td>"      
-                tabla +=  "</tr>"   
-            
-            
-                tabla += "<tr>"
-                tabla +=  "<div>" 
-                tabla +=         "<form>"  
-                tabla +=               "<td>"
-                tabla +=                         "<input type='checkbox' name='vehicle' value='Bike'>I have a bike<br>"
-                tabla +=                         "<input type='checkbox' name='vehicle' value='Car'>I have a car<br>"
-                tabla +=                          "<input type='submit' value='Submit'>"
-                tabla +=                "</td>" 
-                tabla +=          "</form>" 
-                tabla +=  "</div>"  
-                tabla += "</tr>"
+                
                 tabla +=    "</table>"; 
             
+                tabla += "<div>"
+           
+             
+                tabla +=        "<button > Agregar Actor </button>"
+                tabla +=         "<form  class='checkboxes'>"  
+                //     tabla +=                "<input type='checkbox' name='vehicle' value='Bike'> I have a bike<br>"
+                //   tabla +=                " <input type='checkbox' name='vehicle' value='Car'> I have a car<br>"
+                
+                tabla +=          "<table cellpadding='7' width='40%' border='1' align='center'>"
+                tabla +=          "<thead>"
+                tabla +=          "<tr>"
+                tabla +=          "<th>Nombre</th>"
+                tabla +=          "<th>Apellido</th>"		
+                tabla +=          "<th>Serie</th>"
+                tabla +=          "<th>Opciones</th>"
+                tabla +=          "</tr>"
+                tabla +=          "</thead>"
+                tabla +=          "<tbody>"
+                tabla +=          "<tr>"
+                tabla +=          "<td>Jill</td>"
+                tabla +=          "<td>Smith</td>"		
+                tabla +=          "<td>50</td>"
+                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
+                tabla +=          "</tr>"
+                tabla +=          "<tr>"
+                tabla +=          "<td>Eve</td>"
+                tabla +=          "<td>Jackson</td>"
+                tabla +=          "<td>94</td>"
+                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
+                tabla +=          "</tr>"
+                tabla +=          "<tr>"
+                tabla +=          "<td>John</td>"
+                tabla +=          "<td>Doe</td>	"	
+                tabla +=          "<td>80</td>"
+                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
+                tabla +=          "</tr>"
+                tabla +=          "<tr>"
+                tabla +=          "<td>Adam</td>"
+                tabla +=          "<td>Johnson</td>"
+                tabla +=          "<td>67</td>"
+                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
+                tabla +=          "</tr>"
+                tabla +=          "</tbody>"
+                tabla +=          "</table>"
+                
+                tabla +=                "<input type='submit' value='Submit'>"
+                
+                tabla +=          "</form>" 
+             
+                
+                tabla +=  "</div>"  
+                
+                
+                
+                
+            
+            
             }
+            
+            
+            
             $("#modal_cuerpo").append(tabla);                                         
             $(".agregar_actor_serie").click(function(){                
-                agregar_actor_serie($(this).data('id'))                        
+                agregar_actor_serie($(this).data('id')) 
+                
             });                 
             $(".eliminar_actor_serie").click(function(){                
                 eliminar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
-            });                 
+            }); 
+            
+            
+            $(document).ready(function(){
+                $(".checkboxes").hide();
+                $("button").click(function(event){
+                    var desplegable = $(this).next();
+                    $('.checkboxes').not(desplegable).slideUp('fast');
+                    desplegable.slideToggle('fast');
+                    event.preventDefault();
+                })
+            });
+            
+            
+                     
+            
         },      
         error: function(){                
             if(id ==""){                    
