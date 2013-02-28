@@ -1,6 +1,6 @@
 function listado_series(pageNumber){              
     var records=$.getValues("Servlet?id=getpages");
-    var pages= $.getValues("Servlet?id=getpages");
+    var pages= $.getValues("Servlet?id=getpages");    
     var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
     var tabla=      "<table class='tablaserie table-bordered table-hover'>"
     tabla += "<tr>"
@@ -44,7 +44,7 @@ function listado_series(pageNumber){
     tabla +=   "</a>"
             
             
-    tabla +=  getNeighborhood("?pagenumber=", pageNumber, pages, 10); 
+    tabla +=  getNeighborhood("index.jsp?pagenumber=", pageNumber, pages, 10); 
     
     $("#divtabla").empty();
     $("#divtabla").append(tabla);                                                      

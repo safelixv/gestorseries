@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author al036309 - Sofia Felix
  */
 public class Servlet extends HttpServlet {
-    private static Integer numeroPaginas=5;
+
+    private static final Integer numeroItemsPaginas = 5;
+    private Gson gson = new Gson();
+
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -33,62 +36,63 @@ public class Servlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        String id = request.getParameter("id");        
-        Gson gson = new Gson();
-        if (id.equalsIgnoreCase("all")) {            
+
+        String id = request.getParameter("id");
+
+        if (id.equalsIgnoreCase("all")) {
+
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
-            oListaSeries = DAOSeries.getSeries();            
+            oListaSeries = DAOSeries.getSeries();
             String json = gson.toJson(oListaSeries);
             out.print(json);
-        }         
-        if (id.matches("%d")){       
-            int idInt = Integer.parseInt(id);
-            Serie serie = DAOSeries.getSerie(idInt);
+        }
+        if (id.matches("^[0-9]*")) {
             try {
                 Thread.sleep(1000); //se puede variar el retardo
             } catch (InterruptedException e) {
-            }            
+            }
+            int idInt = Integer.parseInt(id);
+            Serie serie = DAOSeries.getSerie(idInt);
             String json = gson.toJson(serie);
             out.println(json);
         }
-        
-        if (id.equalsIgnoreCase("getrecords")){         
-            
-            List<Pojos.Serie> oListaSeries = DAOSeries.getSeries();             
+
+        if (id.equalsIgnoreCase("getrecords")) {
+
+            List<Pojos.Serie> oListaSeries = DAOSeries.getSeries();
             out.print(gson.toJson(oListaSeries.size()));
         }
-        if (id.equalsIgnoreCase("getpages")){           
-            
-            List<Pojos.Serie> oListaSeries = new ArrayList<>();            
-            oListaSeries = DAOSeries.getSeries();            
-            out.print(gson.toJson(oListaSeries.size()/numeroPaginas)); 
+        if (id.equalsIgnoreCase("getpages")) {
+
+            List<Pojos.Serie> oListaSeries = new ArrayList<>();
+            oListaSeries = DAOSeries.getSeries();
+            int div = oListaSeries.size() / numeroItemsPaginas;
+            int resto = oListaSeries.size() % numeroItemsPaginas;
+            if (resto > 0) {
+                div++;
+            }
+            out.print(gson.toJson(div));
         }
-        if (id.equalsIgnoreCase("getpage")){
+        if (id.equalsIgnoreCase("getpage")) {
             Integer page = Integer.parseInt(request.getParameter("page"));
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
-            oListaSeries = DAOSeries.getSeries();            
-            List<Serie> listaSeries = oListaSeries.subList((page*numeroPaginas)-numeroPaginas,(page*numeroPaginas));            
+            oListaSeries = DAOSeries.getSeries();
+            int desde=(page - 1) * numeroItemsPaginas;
+            int hasta=(page * numeroItemsPaginas);
+            if (hasta > oListaSeries.size()){
+                hasta=oListaSeries.size();
+            }
+            List<Serie> listaSeries = oListaSeries.subList(desde,hasta);
             String json = gson.toJson(listaSeries);
-            out.print(json);            
+            out.print(json);
         }
-//        
-//        else {
-//            int idInt = Integer.parseInt(id);
-//            Serie serie = DAOSeries.getSerie(idInt);
-//            try {
-//                Thread.sleep(1000); //se puede variar el retardo
-//            } catch (InterruptedException e) {
-//            }
-//            Gson gson = new Gson();
-//            String json = gson.toJson(serie);
-//            out.println(json);
-//        }
-        
-        
-        
+
+
+
+
         out.flush();
         out.close();
     }
