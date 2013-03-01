@@ -63,7 +63,7 @@ function listado_series(pageNumber){
     $(".nueva_serie").click( function(){
         crear_serie()
     });
-    
+     
 }
 
 function detalle_serie(id){            

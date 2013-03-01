@@ -12,7 +12,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>       
+    <head>        
         <script>
             var a=  <% if (request.getParameter("pagenumber") != null) {
                         out.print(request.getParameter("pagenumber"));

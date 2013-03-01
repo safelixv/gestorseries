@@ -107,7 +107,7 @@ public class DAOActores {
     public static List<Serie> getSeriesActor(String id) {
         ArrayList<Serie> listaSeries = new ArrayList<>();
         try {
-            Mysql.conexion();
+            Mysql.conexion(); 
             ResultSet rs = Mysql.execSQL("SELECT * FROM actores,series_actores where series.id=id_serie AND id_actor ="+id);
             do {
                 Serie serie=new Serie();
