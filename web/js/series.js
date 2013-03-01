@@ -1,6 +1,4 @@
-function listado_series(pageNumber){  
-    
-    var records=$.getValues("Servlet?id=getpages");
+function listado_series(pageNumber){          
     var pages= $.getValues("Servlet?id=getpages");    
     var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
     var tabla=      "<table class='tablaserie table-bordered table-hover'>"
@@ -379,24 +377,6 @@ function getNeighborhood(link,  page_number, total_pages, neighborhood) {
     return vector;
 }           
 
-function ajaxCallSync(url, type, data) {
-    var result;
-    $.ajax({
-        type: type,
-        url: url,
-        datatype: 'json',
-        timeout: 30000,
-        success: function(data2){
-            result=data2;
-        }
-    }            
-    );       
-    return {
-        getResult : function(){
-            if (result) return result;
-        }
-    };
-}; 
 
 jQuery.extend({
     getValues: function(url) {
