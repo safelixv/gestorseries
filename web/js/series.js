@@ -3,13 +3,13 @@ function listado_series(pageNumber){
     var pages= $.getValues("Servlet?id=getpages");    
     var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
     var tabla=      "<table class='tablaserie table-bordered table-hover'>"
-    tabla += "<tr>"
-    tabla +=       "<th>Id</th>"
-    tabla +=       "<th>Nombre Serie</th>"
-    tabla +=       "<th>Año</th>"
-    tabla +=       "<th>Opciones</th>"
-    tabla +=       "<th>Actores</th>"
-    tabla += "</tr>";               
+    tabla +=    "<tr>"
+    tabla +=            "<th>Id</th>"
+    tabla +=            "<th>Nombre Serie</th>"
+    tabla +=            "<th>Año</th>"
+    tabla +=            "<th>Opciones</th>"
+    tabla +=            "<th>Actores</th>"
+    tabla +=    "</tr>";               
     $.each(series, function(index, serie) {
         tabla += "<tr>"                
         tabla +=        "<td>"
@@ -274,8 +274,7 @@ function ver_actores_serie(id){
              
                 tabla +=        "<button > Agregar Actor </button>"
                 tabla +=         "<form  class='checkboxes'>"  
-                //     tabla +=                "<input type='checkbox' name='vehicle' value='Bike'> I have a bike<br>"
-                //   tabla +=                " <input type='checkbox' name='vehicle' value='Car'> I have a car<br>"
+      
                 
                 tabla +=          "<table cellpadding='7' width='40%' border='1' align='center'>"
                 tabla +=          "<thead>"

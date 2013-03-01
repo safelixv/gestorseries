@@ -44,6 +44,10 @@
         <servlet-name>EliminarActorSerieServlet</servlet-name>
         <servlet-class>Controlador.series.EliminarActorSerieServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EliminarSerieActorServlet</servlet-name>
+        <servlet-class>Controlador.series.actores.EliminarSerieActorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>EliminarActorSerieServlet</servlet-name>
         <url-pattern>/EliminarActorSerieServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarSerieActorServlet</servlet-name>
+        <url-pattern>/EliminarSerieActorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

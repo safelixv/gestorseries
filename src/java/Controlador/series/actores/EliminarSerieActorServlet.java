@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador.series;
+package Controlador.series.actores;
 
+import ClasesDAO.DAOActores;
 import ClasesDAO.DAOSeries;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Sofia Felix
  */
-public class EliminarActorSerieServlet extends HttpServlet {
+public class EliminarSerieActorServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -28,17 +29,17 @@ public class EliminarActorSerieServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-             String serieId = request.getParameter("serie_id");
              String actorId = request.getParameter("actor_id");
-             DAOSeries.eliminarActorSerie(serieId,actorId); 
-             log("actor eliminado"+serieId+" "+actorId);
+             String serieId = request.getParameter("serie_id");
+             DAOActores.eliminarSerieActor(actorId,serieId); 
+             log("serie eliminada"+actorId+" "+serieId);
 
-             out.print("Actor eliminado");
+             out.print("Serie eliminada");
         } finally {            
             out.close();
         }

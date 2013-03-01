@@ -134,4 +134,5 @@ public class DAOSeries {
             Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }
