@@ -1,11 +1,17 @@
 
-window.onload=listado_series(a);
+
+if (ver=='series'){
+    window.onload=listado_series(numeroPagina);
+}
+if (ver=='actores'){
+    window.onload=listado_actores(numeroPagina);
+}
 $(document).ready(function() {          
     $(".lista_actores").click(function() {                    
-        listado_actores()        
+        listado_actores(numeroPagina)        
     });
     $(".lista_series").click(function() {    
-        listado_series(a)        
+        listado_series(numeroPagina)        
     });
     
 });

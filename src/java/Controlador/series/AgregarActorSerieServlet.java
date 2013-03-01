@@ -2,19 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador.series.actores;
+package Controlador.series;
 
-import ClasesDAO.DAOActores;
 import ClasesDAO.DAOSeries;
-import Pojos.Actor;
-import Pojos.Serie;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Sofia Felix
+ * @author ACE
  */
-public class GuardarActorServlet extends HttpServlet {
+public class AgregarActorSerieServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -41,31 +33,16 @@ public class GuardarActorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String nombre = request.getParameter("nombre");
-            String ape1 = request.getParameter("ape1");
-            String ape2 = request.getParameter("ape2");
-            String fecha = request.getParameter("fecha");
-            String lugar = request.getParameter("lugar");
-            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
-            Actor actor = new Actor();
-            actor.setNombre(nombre);
-            actor.setApe1(ape1);
-            actor.setApe2(ape2);
-            try {
-                actor.setFecha(sdf.parse(fecha));
-            } catch (ParseException ex) {
-                Logger.getLogger(GuardarActorServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            actor.setLugar(lugar);
-            DAOActores.guardarActor(actor);
-            RequestDispatcher d = request.getRequestDispatcher("index.jsp?ver=actores");
-            d.forward(request, response);
-        } finally {
+          String serieId = request.getParameter("serie_id");
+             String actorId = request.getParameter("actor_id");
+             DAOSeries.agregarActorSerie(serieId,actorId); 
+             log("actor eliminado"+serieId+" "+actorId);
+        } finally {            
             out.close();
         }
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
      * <code>GET</code> method.

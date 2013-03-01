@@ -92,10 +92,6 @@ public class ServletActores extends HttpServlet {
             String json = gson.toJson(listaActores);
             out.print(json);
         }
-
-
-
-
         out.flush();
         out.close();
     }

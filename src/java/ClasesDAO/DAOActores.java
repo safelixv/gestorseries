@@ -107,7 +107,8 @@ public class DAOActores {
         ArrayList<Serie> listaSeries = new ArrayList<>();
         try {
             Mysql.conexion(); 
-            ResultSet rs = Mysql.execSQL("SELECT * FROM actores,series_actores where series.id=id_serie AND id_actor ="+id);
+            ResultSet rs = Mysql.execSQL("SELECT * FROM series,series_actores where series.id=id_serie AND id_actor ="+id);
+            if (!rs.isAfterLast()){
             do {
                 Serie serie=new Serie();
                 serie.setId(rs.getInt("id"));
@@ -118,10 +119,11 @@ public class DAOActores {
                 serie.setAño(rs.getInt("año"));
                 listaSeries.add(serie);
             } while (rs.next());
+            }
             rs.close();
             Mysql.desconexion();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();            
         }
         return listaSeries;
     }

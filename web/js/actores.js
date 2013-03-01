@@ -2,102 +2,72 @@ function listado_actores(pageNumber){
     
     var records=$.getValues("ServletActores?id=getpages");
     var pages= $.getValues("ServletActores?id=getpages");    
-    var series=$.getValues("ServletActores?id=getpage&page="+pageNumber);    
+    var actores=$.getValues("ServletActores?id=getpage&page="+pageNumber);    
     var tabla=      "<table class='tablaactor table-bordered table-hover'>"
     
     $("#divtabla").empty(); 
-    $.ajax({        
-        url: 'ServletActores?id=all',
-        dataType: "json",
-        
-        type: "GET",
-        success:function(actores){   
+    var tabla=      "<table class='table-bordered table-hover'>"
+    tabla += "<tr>"
+    tabla +=       "<th>Id</th>"
+    tabla +=       "<th>Nombre Actor</th>"
+    tabla +=       "<th>Apellido</th>"
+    tabla +=       "<th>Opciones</th>"
+    tabla +=       "<th>Series</th>"
+    tabla += "</tr>";
+    $.each(actores, function(index, actor) {
+        tabla += "<tr>"
+                
+        tabla +=        "<td>"
+        tabla +=        "<p>" +actor.id+"</p>"
+        tabla +=        "</td>"
+                
+        tabla +=        "<td>"
+        tabla +=        "<p>" +actor.nombre+"</p>"
+        tabla +=        "</td>"
+                
+        tabla +=        "<td>"
+        tabla +=        "<p>" +actor.ape2+"</p>"
+        tabla +=        "</td>"
+                
+        tabla +=        "<td>"
+        tabla +=        "<a class='btn ver_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
+        tabla +=        "<a class='btn editar_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
+        tabla +=        "<a class='btn eliminar_actor' data-id="+actor.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
+        tabla +=        "</td>"
+                
+        tabla +=        "<td>"
+        tabla +=        "<a class='btn ver_series_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>Series</strong></a>"
+        tabla +=        "</td>"
+                
+        tabla +=  "</tr>";   
+    });   
             
-    
-            
-            
-            var tabla=      "<table class='table-bordered table-hover'>"
-            tabla += "<tr>"
-            tabla +=       "<th>Id</th>"
-            tabla +=       "<th>Nombre Actor</th>"
-            tabla +=       "<th>Apellido</th>"
-            tabla +=       "<th>Opciones</th>"
-            tabla +=       "<th>Series</th>"
-            tabla += "</tr>";
-            $.each(actores, function(index, actor) {
-                tabla += "<tr>"
-                
-                tabla +=        "<td>"
-                tabla +=        "<p>" +actor.id+"</p>"
-                tabla +=        "</td>"
-                
-                tabla +=        "<td>"
-                tabla +=        "<p>" +actor.nombre+"</p>"
-                tabla +=        "</td>"
-                
-                tabla +=        "<td>"
-                tabla +=        "<p>" +actor.ape2+"</p>"
-                tabla +=        "</td>"
-                
-                tabla +=        "<td>"
-                tabla +=        "<a class='btn ver_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
-                tabla +=        "<a class='btn editar_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
-                tabla +=        "<a class='btn eliminar_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
-                tabla +=        "</td>"
-                
-                tabla +=        "<td>"
-                tabla +=        "<a class='btn ver_series_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>Series</strong></a>"
-                tabla +=        "</td>"
-                
-                tabla +=  "</tr>";   
-            });   
-            
-            tabla +=    "</table>"; 
+    tabla +=    "</table>"; 
             
         
-            tabla +=        "<a class='btn nuevo_actor' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-plus'></i> <strong>Nuevo Actor</strong></a>"
+    tabla +=        "<a class='btn nuevo_actor' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-plus'></i> <strong>Nuevo Actor</strong></a>"
                 
                 
-            tabla +=  getNeighborhood("index.jsp?pagenumber=", pageNumber, pages, 10); 
-           
-            /*
-            tabla +=           "<div class='pagination'>"
-            tabla +=           "<ul>"
-            tabla +=           "<li><a href='#'>Prev</a></li>"
-            tabla +=           "<li><a href='#'>1</a></li>"
-            tabla +=           "<li><a href='#'>2</a></li>"
-            tabla +=           "<li><a href='#'>3</a></li>"
-            tabla +=           "<li><a href='#'>4</a></li>"
-            tabla +=           "<li><a href='#'>5</a></li>"
-            tabla +=           "<li><a href='#'>Next</a></li>"
-            tabla +=          " </ul>"
-            tabla +=         " </div>"
-           */
-                 
-            
-            $("#divtabla").append(tabla);                                         
-            $(".ver_actor").click(function(){                
-                ver_actor($(this).data('id'))                        
-            });                 
-            $(".editar_actor").click(function(){
-                editar_actor($(this).data('id'))       
-            });        
-            $(".eliminar_actor").click( function(){
-                eliminar_actor($(this).data('id'))
-            });
-            $(".ver_series_actor").click( function(){
-                ver_series_actor($(this).data('id'))
-            });
-            $(".nuevo_actor").click( function(){
-                nuevo_actor()
-            });
-        },                                      
-        error: function(){                
-            alert("ERROR 1");
-                        
-        }            
+    tabla +=  getNeighborhood("index.jsp?ver=actores&pagenumber=", pageNumber, pages, 10);                                       
+    $("#divtabla").append(tabla);                                         
+    $(".ver_actor").click(function(){                
+        ver_actor($(this).data('id'))                        
+    });                 
+    $(".editar_actor").click(function(){
+        editar_actor($(this).data('id'))       
+    });        
+    $(".eliminar_actor").click( function(){
+        var confirmacion=confirm('Esta seguro que desea eliminar el actor');        
+        if (confirmacion){
+            eliminar_actor($(this).data('id'))
+        }
     });
-    
+    $(".ver_series_actor").click( function(){
+        ver_series_actor($(this).data('id'))
+    });
+    $(".nuevo_actor").click( function(){
+        nuevo_actor()
+    });            
 }
     
 function ver_actor(id){         

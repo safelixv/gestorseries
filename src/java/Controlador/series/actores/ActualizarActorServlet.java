@@ -60,7 +60,7 @@ public class ActualizarActorServlet extends HttpServlet {
         }
         actor.setLugar(lugar);
         DAOActores.actualizaActor(actor);
-        RequestDispatcher d = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher d = request.getRequestDispatcher("index.jsp?ver=actores");
         d.forward(request, response);        
         out.flush();
         out.close();

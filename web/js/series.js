@@ -29,7 +29,7 @@ function listado_series(pageNumber){
         tabla +=        "<td>"
         tabla +=            "<a class='btn ver_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>View</strong></a>"
         tabla +=            "<a class='btn editar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-edit'></i> <strong>Edit</strong></a>"
-        tabla +=            "<a class='btn eliminar_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
+        tabla +=            "<a class='btn eliminar_serie' data-id="+serie.id+"><i class='icon-trash'></i> <strong>Delete</strong></a>"
         tabla +=        "</td>"    
                 
         tabla +=        "<td>"
@@ -46,7 +46,7 @@ function listado_series(pageNumber){
     tabla +=   "</a>"
             
             
-    tabla +=  getNeighborhood("index.jsp?pagenumber=", pageNumber, pages, 10); 
+    tabla +=  getNeighborhood("index.jsp?ver=series&pagenumber=", pageNumber, pages, 10); 
     
     $("#divtabla").empty();
     $("#divtabla").append(tabla);                                                      
@@ -57,7 +57,10 @@ function listado_series(pageNumber){
         editar_serie($(this).data('id'))       
     });        
     $(".eliminar_serie").click( function(){
-        eliminar_serie($(this).data('id'))
+        var confirmacion=confirm('Esta seguro que desea eliminar la serie');        
+        if (confirmacion){
+            eliminar_serie($(this).data('id'))
+        }
     });
     $(".ver_actores_serie").click( function(){
         ver_actores_serie($(this).data('id'))
@@ -131,6 +134,27 @@ function eliminar_actor_serie(id_serie,id_actor){
  
     
 }
+function agregar_actor_serie(id_serie,id_actor){   
+    alert(id_serie+":"+id_actor);
+    $.ajax({                    
+        url: 'AgregarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
+        dataType: 'text',
+        type: "POST",
+        success: 
+        function(text){                        
+            listado_series(0);
+        },      
+        error: function(){                
+            if(id ==""){                    
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+            }
+        }            
+    });  
+ 
+    
+}
+
 
 function eliminar_serie(id){   
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
@@ -139,9 +163,7 @@ function eliminar_serie(id){
         dataType: 'text',
         type: "POST",
         success: 
-        function(text){                        
-            $("#modal_cuerpo").empty(); 
-            $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
+        function(text){                                    
             listado_series(0);
         },      
         error: function(){                
@@ -232,128 +254,99 @@ function crear_serie()
          
 function ver_actores_serie(id){
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");    
-    $.ajax({                    
-        url: 'ActoresSerieServlet?id='+id, 
-        dataType: 'json',
-        type: "GET",
-        success: 
-        function(actores){                                
-            if(actores.length == 0){
-                $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>La serie no tiene actores</p>");                
-            }else{    
-                $("#modal_cuerpo").empty();                
-                var tabla=      "<table class='tablaactores table table-hover'>"
-                tabla += "<tr>"
-                tabla +=       "<th>Id</th>"
-                tabla +=       "<th>Nombre</th>"
-                tabla +=       "<th>Apellido</th>"    
-                tabla +=       "<th>Opciones</th>" 
-                tabla += "</tr>"          
-                $.each(actores, function(index, actor) {
-                    //   tabla += "<div class='actor_serie'>"
-                    tabla += "<tr>"                
-                    tabla +=        "<td>"
-                    tabla +=            "<p>" +actor.id+"</p>"
-                    tabla +=        "</td>"                   
-                    tabla +=        "<td>"
-                    tabla +=            "<p>" +actor.nombre+"</p>"
-                    tabla +=        "</td>"                                                         
-                    tabla +=        "<td>"
-                    tabla +=            "<p>" +actor.ape2+"</p>"
-                    tabla +=        "</td>"
-                    tabla +=        "<td>"
-                    tabla +=          "<a class='btn eliminar_actor_serie' href=\"#myModal\" data-toggle=\"modal\" data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Eliminar</strong></a>"
-                    tabla +=        "</td>"
-                    tabla += "</tr>"   
-                  
-                });
-                
-                tabla +=    "</table>"; 
-            
-                tabla += "<div>"
-           
-             
-                tabla +=        "<button > Agregar Actor </button>"
-                tabla +=         "<form  class='checkboxes'>"  
-                //     tabla +=                "<input type='checkbox' name='vehicle' value='Bike'> I have a bike<br>"
-                //   tabla +=                " <input type='checkbox' name='vehicle' value='Car'> I have a car<br>"
-                
-                tabla +=          "<table cellpadding='7' width='40%' border='1' align='center'>"
-                tabla +=          "<thead>"
-                tabla +=          "<tr>"
-                tabla +=          "<th>Nombre</th>"
-                tabla +=          "<th>Apellido</th>"		
-                tabla +=          "<th>Serie</th>"
-                tabla +=          "<th>Opciones</th>"
-                tabla +=          "</tr>"
-                tabla +=          "</thead>"
-                tabla +=          "<tbody>"
-                tabla +=          "<tr>"
-                tabla +=          "<td>Jill</td>"
-                tabla +=          "<td>Smith</td>"		
-                tabla +=          "<td>50</td>"
-                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
-                tabla +=          "</tr>"
-                tabla +=          "<tr>"
-                tabla +=          "<td>Eve</td>"
-                tabla +=          "<td>Jackson</td>"
-                tabla +=          "<td>94</td>"
-                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
-                tabla +=          "</tr>"
-                tabla +=          "<tr>"
-                tabla +=          "<td>John</td>"
-                tabla +=          "<td>Doe</td>	"	
-                tabla +=          "<td>80</td>"
-                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
-                tabla +=          "</tr>"
-                tabla +=          "<tr>"
-                tabla +=          "<td>Adam</td>"
-                tabla +=          "<td>Johnson</td>"
-                tabla +=          "<td>67</td>"
-                tabla +=          "<td><input type='checkbox' name='vehicle' value='Bike'></td>"
-                tabla +=          "</tr>"
-                tabla +=          "</tbody>"
-                tabla +=          "</table>"                
-                tabla +=                "<input type='submit' value='Submit'>"              
-                tabla +=          "</form>"                              
-                tabla +=  "</div>"  
+    var actores=$.getValues("ActoresSerieServlet?id="+id);     
+    if(actores.length == 0){
+        $("#modal_cuerpo").empty(); 
+        $("#modal_cuerpo").append("<p>La serie no tiene actores</p>");                
+    }else{    
+        $("#modal_cuerpo").empty();                
+        var tabla=      "<table class='tablaactores table table-hover'>"
+        tabla += "<tr>"
+        tabla +=       "<th>Id</th>"
+        tabla +=       "<th>Nombre</th>"
+        tabla +=       "<th>Apellido</th>"    
+        tabla +=       "<th>Opciones</th>" 
+        tabla += "</tr>"          
+        $.each(actores, function(index, actor) {            
+            tabla += "<tr>"                
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.id+"</p>"
+            tabla +=        "</td>"                   
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.nombre+"</p>"
+            tabla +=        "</td>"                                                         
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.ape2+"</p>"
+            tabla +=        "</td>"
+            tabla +=        "<td>"
+            tabla +=          "<a class='btn eliminar_actor_serie' data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Eliminar</strong></a>"
+            tabla +=        "</td>"
+            tabla += "</tr>"                     
+        });                
+        tabla +=    "</table>";             
+        tabla += "<div>"                       
+        tabla +=        "<button > Agregar Actor </button>"                            
+        tabla +=          "<table id='tabla_actores' cellpadding='7' width='40%' border='1' align='center'>"
+        tabla +=          "<thead>"
+        tabla +=          "<tr>"
+        tabla +=          "<th>Nombre</th>"
+        tabla +=          "<th>Apellido</th>"		
+        tabla +=          "<th>Serie</th>"
+        tabla +=          "<th>Opciones</th>"
+        tabla +=          "</tr>"
+        tabla +=          "</thead>"
+        tabla +=          "<tbody>"     
+        var actores2=$.getValues("ServletActores?id=all"); 
+        $.each(actores2, function(index, actor) {            
+            tabla += "<tr>"                
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.id+"</p>"
+            tabla +=        "</td>"                   
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.nombre+"</p>"
+            tabla +=        "</td>"                                                         
+            tabla +=        "<td>"
+            tabla +=            "<p>" +actor.ape2+"</p>"
+            tabla +=        "</td>"
+            tabla +=        "<td>"
+            tabla +=          "<a class='btn agregar_actor_serie' data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Agregar</strong></a>"
+            tabla +=        "</td>"
+            tabla += "</tr>"                
+        });        
+
+        tabla +=        "</td>"
+        tabla += "</tr>"                                                         
+        tabla +=          "</tbody>"
+        tabla +=          "</table>"                                                 
+        tabla +=  "</div>"  
                                                                                         
-            }
+    }
             
             
       
-            $("#modal_cuerpo").append(tabla);                                         
-            $(".agregar_actor_serie").click(function(){                
-                agregar_actor_serie($(this).data('id')) 
-                
-            });                 
-            $(".eliminar_actor_serie").click(function(){                
-                eliminar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
-            }); 
+    $("#modal_cuerpo").append(tabla);                                                    
+    $(".eliminar_actor_serie").click(function(){                
+        eliminar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
+        ver_actores_serie(id);
+    }); 
+    $(".agregar_actor_serie").click(function(){          
+        agregar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
+        ver_actores_serie(id);
+    });    
+            
+    $(document).ready(function(){
+        $(".tabla_actores").hide();
+        $("button").click(function(event){
+            var desplegable = $(this).next();
+            $('.tabla_actores').not(desplegable).slideUp('fast');
+            desplegable.slideToggle('fast');
+            event.preventDefault();
+        })
+    });
             
             
-            $(document).ready(function(){
-                $(".checkboxes").hide();
-                $("button").click(function(event){
-                    var desplegable = $(this).next();
-                    $('.checkboxes').not(desplegable).slideUp('fast');
-                    desplegable.slideToggle('fast');
-                    event.preventDefault();
-                })
-            });
-            
-            
-                     
-            
-        },      
-        error: function(){                
-            if(id ==""){                    
-                $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
-            }
-        }            
-    });            
+                              
+
 }        
     
 function getNeighborhood(link,  page_number, total_pages, neighborhood) { 

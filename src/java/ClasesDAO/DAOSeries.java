@@ -134,5 +134,17 @@ public class DAOSeries {
             Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public static void agregarActorSerie(String serieId, String actorId) {
+           try {
+            Mysql.conexion();
+            Integer id=Mysql.insertOne("series_actores");
+            Mysql.updateOne(id,"series_actores","id_serie",serieId);
+            Mysql.updateOne(id,"series_actores","id_actor",actorId);
+            Mysql.desconexion();
+        } catch (Exception ex) {
+            Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

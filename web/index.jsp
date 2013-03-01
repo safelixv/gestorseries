@@ -14,12 +14,17 @@
 <html>
     <head>        
         <script>
-            var a=  <% if (request.getParameter("pagenumber") != null) {
-                        out.print(request.getParameter("pagenumber"));
-                    } else {
-                        out.print(1);
-                    }                
-           %>
+            var numeroPagina=<% if (request.getParameter("pagenumber") != null) {
+                    out.print(request.getParameter("pagenumber"));
+                } else {
+                    out.print(1);
+                }
+            %>
+                var ver=<% if (request.getParameter("ver") != null) {
+                    out.print(request.getParameter("ver"));
+                } else {
+                    out.print("'series';");
+                   }%>
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
