@@ -57,7 +57,7 @@ function listado_series(pageNumber){
         editar_serie($(this).data('id'))       
     });        
     $(".eliminar_serie").click( function(){
-        var confirmacion=confirm('Esta seguro que desea eliminar la serie');        
+        var confirmacion=confirm('Esta seguro que desea eliminar la serie?');        
         if (confirmacion){
             eliminar_serie($(this).data('id'))
         }
@@ -335,7 +335,7 @@ function ver_actores_serie(id){
     });    
             
     $(document).ready(function(){
-        $(".tabla_actores").hide();
+        $("#tabla_actores").hide();
         $("button").click(function(event){
             var desplegable = $(this).next();
             $('.tabla_actores').not(desplegable).slideUp('fast');

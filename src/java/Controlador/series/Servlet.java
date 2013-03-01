@@ -51,7 +51,7 @@ public class Servlet extends HttpServlet {
         }
         if (id.matches("^[0-9]*")) {
             try {
-                Thread.sleep(1000); //se puede variar el retardo
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
             int idInt = Integer.parseInt(id);
