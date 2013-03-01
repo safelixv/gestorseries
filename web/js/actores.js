@@ -1,6 +1,9 @@
-function listado_actores(){
+function listado_actores(pageNumber){
     
-    
+    var records=$.getValues("ServletActores?id=getpages");
+    var pages= $.getValues("ServletActores?id=getpages");    
+    var series=$.getValues("ServletActores?id=getpage&page="+pageNumber);    
+    var tabla=      "<table class='tablaactor table-bordered table-hover'>"
     
     $("#divtabla").empty(); 
     $.ajax({        
@@ -9,6 +12,8 @@ function listado_actores(){
         
         type: "GET",
         success:function(actores){   
+            
+    
             
             
             var tabla=      "<table class='table-bordered table-hover'>"
@@ -41,7 +46,7 @@ function listado_actores(){
                 tabla +=        "</td>"
                 
                 tabla +=        "<td>"
-                tabla +=        "<a class='btn ver' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>Series</strong></a>"
+                tabla +=        "<a class='btn ver_series_actor' href=\"#myModal\" data-toggle=\"modal\" data-id="+actor.id+"><i class='icon-eye-open'></i> <strong>Series</strong></a>"
                 tabla +=        "</td>"
                 
                 tabla +=  "</tr>";   
@@ -52,7 +57,10 @@ function listado_actores(){
         
             tabla +=        "<a class='btn nuevo_actor' href=\"#myModal\" data-toggle=\"modal\"><i class='icon-plus'></i> <strong>Nuevo Actor</strong></a>"
                 
+                
+            tabla +=  getNeighborhood("index.jsp?pagenumber=", pageNumber, pages, 10); 
            
+            /*
             tabla +=           "<div class='pagination'>"
             tabla +=           "<ul>"
             tabla +=           "<li><a href='#'>Prev</a></li>"
@@ -64,7 +72,7 @@ function listado_actores(){
             tabla +=           "<li><a href='#'>Next</a></li>"
             tabla +=          " </ul>"
             tabla +=         " </div>"
-           
+           */
                  
             
             $("#divtabla").append(tabla);                                         
@@ -242,11 +250,11 @@ function ver_series_actor(id){
                 $("#modal_cuerpo").append("<p>Este actor no trabaja en ninguna serie.</p>");                
             }else{    
                 $("#modal_cuerpo").empty();                
-                var tabla=      "<table class='tablaactores table table-hover'>"
+                var tabla=      "<table class='tablaseries table table-hover'>"
                 tabla += "<tr>"
                 tabla +=       "<th>Id</th>"
                 tabla +=       "<th>Nombre</th>"
-                tabla +=       "<th>Apellido</th>"    
+                tabla +=       "<th>Año</th>"    
                 tabla +=       "<th>Opciones</th>" 
                 tabla += "</tr>"          
                 $.each(series, function(index, serie) {
@@ -259,10 +267,10 @@ function ver_series_actor(id){
                     tabla +=            "<p>" +serie.nombre+"</p>"
                     tabla +=        "</td>"                                                         
                     tabla +=        "<td>"
-                    tabla +=            "<p>" +serie.ape2+"</p>"
+                    tabla +=            "<p>" +serie.año+"</p>"
                     tabla +=        "</td>"
                     tabla +=        "<td>"
-                    tabla +=          "<a class='btn eliminar_serie_actor' href=\"#myModal\" data-toggle=\"modal\" data-actor_id="+id+" data-serie_id="+actor.id+"><strong>Eliminar</strong></a>"
+                    tabla +=          "<a class='btn eliminar_serie_actor' href=\"#myModal\" data-toggle=\"modal\" data-actor_id="+id+" data-serie_id="+serie.id+"><strong>Eliminar</strong></a>"
                     tabla +=        "</td>"
                     tabla += "</tr>"   
                   
@@ -280,8 +288,8 @@ function ver_series_actor(id){
                 tabla +=          "<thead>"
                 tabla +=          "<tr>"
                 tabla +=          "<th>Nombre</th>"
-                tabla +=          "<th>Apellido</th>"		
-                tabla +=          "<th>Serie</th>"
+                tabla +=          "<th>Canal</th>"		
+                tabla +=          "<th>Año</th>"
                 tabla +=          "<th>Opciones</th>"
                 tabla +=          "</tr>"
                 tabla +=          "</thead>"

@@ -7,21 +7,25 @@ package Controlador.series.actores;
 import ClasesDAO.DAOActores;
 import ClasesDAO.DAOSeries;
 import Pojos.Actor;
+import Pojos.Serie;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-  
+
 /**
  *
  * @author al036309 - Sofia Felix
  */
 public class ServletActores extends HttpServlet {
+
+    private static final Integer numeroItemsPaginas = 5;
+    private Gson gson = new Gson();
 
     /**
      * Processes requests for both HTTP
@@ -35,30 +39,62 @@ public class ServletActores extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
+
         String idact = request.getParameter("id");
-        System.out.println("id:" + idact);
 
         if (idact.equalsIgnoreCase("all")) {
+
             List<Pojos.Actor> oListaActores = new ArrayList<>();
             oListaActores = DAOActores.getActores();
-            Gson gson = new Gson();
             String json = gson.toJson(oListaActores);
             out.print(json);
 
-        } else {
-            int idInt = Integer.parseInt(idact);
-            Actor actor = DAOActores.getActor(idInt);
+        }
+        if (idact.matches("^[0-9]*")) {
             try {
                 Thread.sleep(1000); //se puede variar el retardo
             } catch (InterruptedException e) {
             }
+            int idInt = Integer.parseInt(idact);
+            Actor actor = DAOActores.getActor(idInt);
             Gson gson = new Gson();
             String json = gson.toJson(actor);
             out.println(json);
         }
+        if (idact.equalsIgnoreCase("getrecords")) {
+
+            List<Pojos.Actor> oListaActores = DAOActores.getActores();
+            out.print(gson.toJson(oListaActores.size()));
+        }
+        if (idact.equalsIgnoreCase("getpages")) {
+
+            List<Pojos.Actor> oListaActores = new ArrayList<>();
+            oListaActores = DAOActores.getActores();
+            int div = oListaActores.size() / numeroItemsPaginas;
+            int resto = oListaActores.size() % numeroItemsPaginas;
+            if (resto > 0) {
+                div++;
+            }
+            out.print(gson.toJson(div));
+        }
+        if (idact.equalsIgnoreCase("getpage")) {
+            Integer page = Integer.parseInt(request.getParameter("page"));
+            List<Pojos.Actor> oListaActores = new ArrayList<>();
+            oListaActores = DAOActores.getActores();
+            int desde = (page - 1) * numeroItemsPaginas;
+            int hasta = (page * numeroItemsPaginas);
+            if (hasta > oListaActores.size()) {
+                hasta = oListaActores.size();
+            }
+            List<Actor> listaActores = oListaActores.subList(desde, hasta);
+            String json = gson.toJson(listaActores);
+            out.print(json);
+        }
+
+
+
 
         out.flush();
         out.close();
@@ -78,35 +114,6 @@ public class ServletActores extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    /*    response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-
-
-        String idact = request.getParameter("id");
-
-        if (idact.equalsIgnoreCase("all")) {
-            List<Actor> oListaActores = new ArrayList<>();
-
-            oListaActores = DAOActores.getActores();
-
-            Gson gson = new Gson();
-            String json = gson.toJson(oListaActores);
-            out.print(json);
-
-        } else {
-
-            int idf = Integer.parseInt(idact);
-            Actor lista = new Actor();
-            lista = DAOActores.getActor(idf);
-            try {
-                Thread.sleep(1000); //se puede variar el retardo
-            } catch (InterruptedException e) {
-            }
-            Gson gson = new Gson();
-            String json = gson.toJson(lista);
-            out.println(json);
-        }*/
-
     }
 
     /**

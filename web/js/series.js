@@ -1,8 +1,10 @@
-function listado_series(pageNumber){              
+function listado_series(pageNumber){  
+    
     var records=$.getValues("Servlet?id=getpages");
     var pages= $.getValues("Servlet?id=getpages");    
     var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
     var tabla=      "<table class='tablaserie table-bordered table-hover'>"
+    
     tabla +=    "<tr>"
     tabla +=            "<th>Id</th>"
     tabla +=            "<th>Nombre Serie</th>"
@@ -63,7 +65,7 @@ function listado_series(pageNumber){
     $(".nueva_serie").click( function(){
         crear_serie()
     });
-     
+    
 }
 
 function detalle_serie(id){            
@@ -274,7 +276,8 @@ function ver_actores_serie(id){
              
                 tabla +=        "<button > Agregar Actor </button>"
                 tabla +=         "<form  class='checkboxes'>"  
-      
+                //     tabla +=                "<input type='checkbox' name='vehicle' value='Bike'> I have a bike<br>"
+                //   tabla +=                " <input type='checkbox' name='vehicle' value='Car'> I have a car<br>"
                 
                 tabla +=          "<table cellpadding='7' width='40%' border='1' align='center'>"
                 tabla +=          "<thead>"

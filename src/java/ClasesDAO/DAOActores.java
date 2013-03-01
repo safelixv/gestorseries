@@ -49,7 +49,8 @@ public class DAOActores {
         Actor actor = new Actor();
         try {
             Mysql.conexion();
-            ResultSet rs = Mysql.execSQL("SELECT * FROM actores WHERE id = " + id);            
+            ResultSet rs = Mysql.execSQL("SELECT * FROM actores WHERE id = " + id); 
+            
             actor.setId(rs.getInt("id"));
             actor.setNombre(rs.getString("nombre_actor"));
             actor.setApe1(rs.getString("ape1_actor"));
@@ -101,8 +102,6 @@ public class DAOActores {
         }
 
     }
-
-
 
     public static List<Serie> getSeriesActor(String id) {
         ArrayList<Serie> listaSeries = new ArrayList<>();
