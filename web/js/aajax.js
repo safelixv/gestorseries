@@ -7,7 +7,8 @@ if (ver=='actores'){
     window.onload=listado_actores(numeroPagina);
 }
 $(document).ready(function() {          
-    $(".lista_actores").click(function() {                    
+    $(".lista_actores").click(function() {   
+        alert("actores");
         listado_actores(numeroPagina)        
     });
     $(".lista_series").click(function() {    

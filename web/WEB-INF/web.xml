@@ -52,6 +52,10 @@
         <servlet-name>AgregarActorSerieServlet</servlet-name>
         <servlet-class>Controlador.series.AgregarActorSerieServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AgregarSerieActorServlet</servlet-name>
+        <servlet-class>Controlador.series.actores.AgregarSerieActorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>AgregarActorSerieServlet</servlet-name>
         <url-pattern>/AgregarActorSerieServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarSerieActorServlet</servlet-name>
+        <url-pattern>/AgregarSerieActorServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

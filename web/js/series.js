@@ -288,8 +288,7 @@ function ver_actores_serie(id){
         tabla +=          "<thead>"
         tabla +=          "<tr>"
         tabla +=          "<th>Nombre</th>"
-        tabla +=          "<th>Apellido</th>"		
-        tabla +=          "<th>Serie</th>"
+        tabla +=          "<th>Apellido</th>"		        
         tabla +=          "<th>Opciones</th>"
         tabla +=          "</tr>"
         tabla +=          "</thead>"
@@ -297,9 +296,6 @@ function ver_actores_serie(id){
         var actores2=$.getValues("ServletActores?id=all"); 
         $.each(actores2, function(index, actor) {            
             tabla += "<tr>"                
-            tabla +=        "<td>"
-            tabla +=            "<p>" +actor.id+"</p>"
-            tabla +=        "</td>"                   
             tabla +=        "<td>"
             tabla +=            "<p>" +actor.nombre+"</p>"
             tabla +=        "</td>"                                                         

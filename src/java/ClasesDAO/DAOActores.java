@@ -49,8 +49,8 @@ public class DAOActores {
         Actor actor = new Actor();
         try {
             Mysql.conexion();
-            ResultSet rs = Mysql.execSQL("SELECT * FROM actores WHERE id = " + id); 
-            
+            ResultSet rs = Mysql.execSQL("SELECT * FROM actores WHERE id = " + id);
+
             actor.setId(rs.getInt("id"));
             actor.setNombre(rs.getString("nombre_actor"));
             actor.setApe1(rs.getString("ape1_actor"));
@@ -92,7 +92,7 @@ public class DAOActores {
 
     public static void guardarActor(Actor actor) {
         try {
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sqlinsertar = "Insert into actores(nombre_actor,ape1_actor,ape2_actor,fecha_nac,lugar_nac) VALUES ('" + actor.getNombre() + "','" + actor.getApe1() + "','" + actor.getApe2() + "','" + sdf.format(actor.getFecha()) + "','" + actor.getLugar() + "')";
             Mysql.conexion();
             Mysql.insertar(sqlinsertar);
@@ -106,38 +106,48 @@ public class DAOActores {
     public static List<Serie> getSeriesActor(String id) {
         ArrayList<Serie> listaSeries = new ArrayList<>();
         try {
-            Mysql.conexion(); 
-            ResultSet rs = Mysql.execSQL("SELECT * FROM series,series_actores where series.id=id_serie AND id_actor ="+id);
-            if (!rs.isAfterLast()){
-            do {
-                Serie serie=new Serie();
-                serie.setId(rs.getInt("id"));
-                serie.setNombre(rs.getString("nombre_serie"));
-                serie.setCanal(rs.getString("canal"));
-                serie.setTemporadas(rs.getInt("temporadas"));
-                serie.setCapitulos(rs.getInt("capitulos"));
-                serie.setAño(rs.getInt("año"));
-                listaSeries.add(serie);
-            } while (rs.next());
+            Mysql.conexion();
+            ResultSet rs = Mysql.execSQL("SELECT * FROM series,series_actores where series.id=id_serie AND id_actor =" + id);
+            if (!rs.isAfterLast()) {
+                do {
+                    Serie serie = new Serie();
+                    serie.setId(rs.getInt("id"));
+                    serie.setNombre(rs.getString("nombre_serie"));
+                    serie.setCanal(rs.getString("canal"));
+                    serie.setTemporadas(rs.getInt("temporadas"));
+                    serie.setCapitulos(rs.getInt("capitulos"));
+                    serie.setAño(rs.getInt("año"));
+                    listaSeries.add(serie);
+                } while (rs.next());
             }
             rs.close();
             Mysql.desconexion();
         } catch (Exception e) {
-            e.printStackTrace();            
+            e.printStackTrace();
         }
         return listaSeries;
     }
-    
-       public static void eliminarSerieActor(String serieId, String actorId) {
+
+    public static void eliminarSerieActor(String serieId, String actorId) {
         try {
             Mysql.conexion();
-            ResultSet rs = Mysql.execSQL("SELECT id FROM ACTORES_SERIES WHERE id_actor = "+actorId+" and id_serie = "+serieId);
-            Mysql.removeOne(rs.getInt("id"),"ACTORES_SERIES");            
+            ResultSet rs = Mysql.execSQL("SELECT id FROM ACTORES_SERIES WHERE id_actor = " + actorId + " and id_serie = " + serieId);
+            Mysql.removeOne(rs.getInt("id"), "ACTORES_SERIES");
             Mysql.desconexion();
         } catch (Exception ex) {
             Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
+    public static void agregarSerieActor(String serieId, String actorId) {
+        try {
+            Mysql.conexion();
+            Integer id = Mysql.insertOne("series_actores");
+            Mysql.updateOne(id, "series_actores", "id_serie", serieId);
+            Mysql.updateOne(id, "series_actores", "id_actor", actorId);
+            Mysql.desconexion();
+        } catch (Exception ex) {
+            Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
