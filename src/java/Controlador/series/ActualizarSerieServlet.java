@@ -4,7 +4,8 @@
  */
 package Controlador.series;
 
-import ClasesDAO.DAOSeries;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Serie;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,6 +42,7 @@ public class ActualizarSerieServlet extends HttpServlet {
         String temporadas = request.getParameter("temporadas");
         String capitulos = request.getParameter("capitulos");
         String anyo = request.getParameter("anyo");        
+        String generoId = request.getParameter("genero_id");        
         Serie serie=new Serie();
         serie.setId(Integer.parseInt(id));
         serie.setNombre(nombre);
@@ -48,7 +50,8 @@ public class ActualizarSerieServlet extends HttpServlet {
         serie.setTemporadas(Integer.parseInt(temporadas));
         serie.setCapitulos(Integer.parseInt(capitulos));
         serie.setAño(Integer.parseInt(anyo));
-        DAOSeries.editarSerie(serie);
+        serie.setGeneroId(Integer.parseInt(generoId));
+        GestorSeriesDAO.getInstance().getSeriesDAO().editarSerie(serie);
         RequestDispatcher d = request.getRequestDispatcher("index.jsp");
         d.forward(request, response);        
         out.flush();

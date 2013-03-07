@@ -4,8 +4,9 @@
  */
 package Controlador.series.actores;
 
-import ClasesDAO.DAOActores;
-import ClasesDAO.DAOSeries;
+import ClasesDAO.ActoresDAOjdbc;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Actor;
 import Pojos.Serie;
 import com.google.gson.Gson;
@@ -43,7 +44,7 @@ public class SeriesActorServlet extends HttpServlet {
             }
         try {
             String id = request.getParameter("id");    
-            List<Serie> actores=DAOActores.getSeriesActor(id);
+            List<Serie> actores=GestorSeriesDAO.getInstance().getActoresDAO().getSeriesActor(id);
             Gson gson = new Gson();
             String json = gson.toJson(actores);
             out.print(json);

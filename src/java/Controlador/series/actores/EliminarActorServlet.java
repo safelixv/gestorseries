@@ -4,8 +4,9 @@
  */
 package Controlador.series.actores;
 
-import ClasesDAO.DAOActores;
-import ClasesDAO.DAOSeries;
+import ClasesDAO.ActoresDAOjdbc;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Serie;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,7 +36,7 @@ public class EliminarActorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();                 
         String id = request.getParameter("id");        
-        DAOActores.eliminaActor(Integer.parseInt(id));
+        GestorSeriesDAO.getInstance().getActoresDAO().eliminaActor(Integer.parseInt(id));
         out.print("Actor eliminado");
         out.flush();
         out.close();

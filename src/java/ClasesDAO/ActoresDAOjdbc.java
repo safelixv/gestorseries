@@ -18,10 +18,11 @@ import java.util.logging.Logger;
  *
  * @author al036309 - Sofia Felix
  */
-public class DAOActores {
+public class ActoresDAOjdbc implements ActoresDAO {
 
 //SELECT * FROM actores WHERE id = 38
-    public static ArrayList<Actor> getActores() {
+    @Override
+    public  ArrayList<Actor> getActores() {
 
         ArrayList<Actor> listaActores = new ArrayList<>();
         try {
@@ -45,7 +46,8 @@ public class DAOActores {
         return listaActores;
     }
 
-    public static Actor getActor(int id) {
+    @Override
+    public  Actor getActor(int id) {
         Actor actor = new Actor();
         try {
             Mysql.conexion();
@@ -65,7 +67,8 @@ public class DAOActores {
         return actor;
     }
 
-    public static void actualizaActor(Actor Actor) {
+    @Override
+    public  void actualizaActor(Actor Actor) {
         try {
             Mysql.conexion();
             Mysql.updateOne(Actor.getId(), "actores", "nombre_actor", Actor.getNombre());
@@ -75,22 +78,24 @@ public class DAOActores {
             Mysql.updateOne(Actor.getId(), "actores", "lugar_nac", "" + Actor.getLugar());
             Mysql.desconexion();
         } catch (Exception ex) {
-            Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActoresDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void eliminaActor(Integer id) {
+    @Override
+    public  void eliminaActor(Integer id) {
         try {
             Mysql.conexion();
             Mysql.removeOne(id, "actores");
             Mysql.desconexion();
             Mysql.commitTrans();
         } catch (Exception ex) {
-            Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActoresDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void guardarActor(Actor actor) {
+    @Override
+    public  void guardarActor(Actor actor) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String sqlinsertar = "Insert into actores(nombre_actor,ape1_actor,ape2_actor,fecha_nac,lugar_nac) VALUES ('" + actor.getNombre() + "','" + actor.getApe1() + "','" + actor.getApe2() + "','" + sdf.format(actor.getFecha()) + "','" + actor.getLugar() + "')";
@@ -98,12 +103,13 @@ public class DAOActores {
             Mysql.insertar(sqlinsertar);
             Mysql.desconexion();
         } catch (Exception ex) {
-            Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActoresDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public static List<Serie> getSeriesActor(String id) {
+    @Override
+    public  List<Serie> getSeriesActor(String id) {
         ArrayList<Serie> listaSeries = new ArrayList<>();
         try {
             Mysql.conexion();
@@ -128,18 +134,20 @@ public class DAOActores {
         return listaSeries;
     }
 
-    public static void eliminarSerieActor(String serieId, String actorId) {
+    @Override
+    public  void eliminarSerieActor(String serieId, String actorId) {
         try {
             Mysql.conexion();
             ResultSet rs = Mysql.execSQL("SELECT id FROM ACTORES_SERIES WHERE id_actor = " + actorId + " and id_serie = " + serieId);
             Mysql.removeOne(rs.getInt("id"), "ACTORES_SERIES");
             Mysql.desconexion();
         } catch (Exception ex) {
-            Logger.getLogger(DAOActores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ActoresDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void agregarSerieActor(String serieId, String actorId) {
+    @Override
+    public  void agregarSerieActor(String serieId, String actorId) {
         try {
             Mysql.conexion();
             Integer id = Mysql.insertOne("series_actores");
@@ -147,7 +155,7 @@ public class DAOActores {
             Mysql.updateOne(id, "series_actores", "id_actor", actorId);
             Mysql.desconexion();
         } catch (Exception ex) {
-            Logger.getLogger(DAOSeries.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SeriesDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

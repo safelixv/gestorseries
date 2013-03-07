@@ -4,8 +4,9 @@
  */
 package Controlador.series.actores;
 
-import ClasesDAO.DAOActores;
-import ClasesDAO.DAOSeries;
+import ClasesDAO.ActoresDAOjdbc;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -36,7 +37,7 @@ public class EliminarSerieActorServlet extends HttpServlet {
         try {
              String actorId = request.getParameter("actor_id");
              String serieId = request.getParameter("serie_id");
-             DAOActores.eliminarSerieActor(actorId,serieId); 
+             GestorSeriesDAO.getInstance().getActoresDAO().eliminarSerieActor(actorId,serieId); 
              log("serie eliminada"+actorId+" "+serieId);
 
              out.print("Serie eliminada");

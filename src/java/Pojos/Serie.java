@@ -18,7 +18,9 @@ public class Serie {
     private int temporadas;
     private int capitulos;
     private int año;
+    private Integer generoId;
     private List<Actor> actores;
+    
 
     public int getId() {
         return id;
@@ -75,4 +77,14 @@ public class Serie {
     public void setActores(List<Actor> actores) {
         this.actores = actores;
     }
+
+    public Integer getGeneroId() {
+        return generoId;
+    }
+
+    public void setGeneroId(Integer generoId) {
+        this.generoId = generoId;
+    }
+    
+    
 }

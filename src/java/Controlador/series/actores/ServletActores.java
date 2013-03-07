@@ -4,8 +4,9 @@
  */
 package Controlador.series.actores;
 
-import ClasesDAO.DAOActores;
-import ClasesDAO.DAOSeries;
+import ClasesDAO.ActoresDAOjdbc;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Actor;
 import Pojos.Serie;
 import com.google.gson.Gson;
@@ -47,7 +48,7 @@ public class ServletActores extends HttpServlet {
         if (idact.equalsIgnoreCase("all")) {
 
             List<Pojos.Actor> oListaActores = new ArrayList<>();
-            oListaActores = DAOActores.getActores();
+            oListaActores = GestorSeriesDAO.getInstance().getActoresDAO().getActores();
             String json = gson.toJson(oListaActores);
             out.print(json);
 
@@ -58,20 +59,20 @@ public class ServletActores extends HttpServlet {
             } catch (InterruptedException e) {
             }
             int idInt = Integer.parseInt(idact);
-            Actor actor = DAOActores.getActor(idInt);
+            Actor actor = GestorSeriesDAO.getInstance().getActoresDAO().getActor(idInt);
             Gson gson = new Gson();
             String json = gson.toJson(actor);
             out.println(json);
         }
         if (idact.equalsIgnoreCase("getrecords")) {
 
-            List<Pojos.Actor> oListaActores = DAOActores.getActores();
+            List<Pojos.Actor> oListaActores = GestorSeriesDAO.getInstance().getActoresDAO().getActores();
             out.print(gson.toJson(oListaActores.size()));
         }
         if (idact.equalsIgnoreCase("getpages")) {
 
             List<Pojos.Actor> oListaActores = new ArrayList<>();
-            oListaActores = DAOActores.getActores();
+            oListaActores = GestorSeriesDAO.getInstance().getActoresDAO().getActores();
             int div = oListaActores.size() / numeroItemsPaginas;
             int resto = oListaActores.size() % numeroItemsPaginas;
             if (resto > 0) {
@@ -82,7 +83,7 @@ public class ServletActores extends HttpServlet {
         if (idact.equalsIgnoreCase("getpage")) {
             Integer page = Integer.parseInt(request.getParameter("page"));
             List<Pojos.Actor> oListaActores = new ArrayList<>();
-            oListaActores = DAOActores.getActores();
+            oListaActores = GestorSeriesDAO.getInstance().getActoresDAO().getActores();
             int desde = (page - 1) * numeroItemsPaginas;
             int hasta = (page * numeroItemsPaginas);
             if (hasta > oListaActores.size()) {

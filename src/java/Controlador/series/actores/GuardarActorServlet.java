@@ -4,8 +4,9 @@
  */
 package Controlador.series.actores;
 
-import ClasesDAO.DAOActores;
-import ClasesDAO.DAOSeries;
+import ClasesDAO.ActoresDAOjdbc;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Actor;
 import Pojos.Serie;
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class GuardarActorServlet extends HttpServlet {
                 Logger.getLogger(GuardarActorServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             actor.setLugar(lugar);
-            DAOActores.guardarActor(actor);
+            GestorSeriesDAO.getInstance().getActoresDAO().guardarActor(actor);
             RequestDispatcher d = request.getRequestDispatcher("index.jsp?ver=actores");
             d.forward(request, response);
         } finally {

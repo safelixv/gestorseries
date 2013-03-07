@@ -4,7 +4,8 @@
  */
 package Controlador.series;
 
-import ClasesDAO.DAOSeries;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Serie;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,13 +41,15 @@ public class GuardarSerieServlet extends HttpServlet {
             String temporadas = request.getParameter("temporadas");
             String capitulos = request.getParameter("capitulos");
             String anyo = request.getParameter("anyo");
+            String generoId = request.getParameter("genero_id");
             Serie serie = new Serie();            
             serie.setNombre(nombre);
             serie.setCanal(canal);
             serie.setTemporadas(Integer.parseInt(temporadas));
             serie.setCapitulos(Integer.parseInt(capitulos));
-            serie.setAño(Integer.parseInt(anyo));                                             
-            DAOSeries.nuevaSerie(serie);
+            serie.setAño(Integer.parseInt(anyo));   
+            serie.setGeneroId(Integer.parseInt(generoId));
+            GestorSeriesDAO.getInstance().getSeriesDAO().nuevaSerie(serie);
             RequestDispatcher d = request.getRequestDispatcher("index.jsp");
             d.forward(request, response);
         } finally {

@@ -81,6 +81,7 @@ function detalle_serie(id){
                 $("#modal_cuerpo").empty(); 
                 $("#modal_cuerpo").append("<p>El id no existe.</p>");                
             }else{                    
+                var genero=$.getValues("GenerosServlet?id="+serie.generoId);
                 $("#modal_cuerpo").empty();                 
                 $("#modal_cuerpo").append(                            
                     "<div class='grande-datos'>",   
@@ -91,7 +92,8 @@ function detalle_serie(id){
                     "<strong class='text-success'>Canal: "+serie.canal+"</strong><br>",
                     "<strong class='text-success'>Numero de Temporadas: "+serie.tempordas+"</strong><br>",
                     "<strong class='text-success'>Numero de Capitulos: "+serie.capitulos+"</strong><br>",
-                    "<strong class='text-success'>Año: "+serie.año+"</strong>",
+                    "<strong class='text-success'>Año: "+serie.año+"</strong><br>",
+                    "<strong class='text-success'>Genero: "+genero.nombre+"</strong>",
                     "</div>",
 
                     "<div>",
@@ -202,7 +204,7 @@ function editar_serie(id){
                 "<input name='capitulos' type='text' value='"+serie.capitulos+"' class='input-large'/>"+							 
                 "<label>Año</label>"+  
                 "<input name='anyo' type='text' value='"+serie.año+"' class='input-large'/>"+ 
-
+                "<label>Genero</label>"+  select_generos(serie.generoId)        + 
                 "<div>"+  
                 "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
                 "</div>"+          
@@ -239,8 +241,7 @@ function crear_serie()
     "<input name='capitulos' type='text' class='input-large'/>"+							 
     "<label>Año</label>"+  
     "<input name='anyo' type='text' class='input-large'/>"+ 
-
-    "<div>"+  
+    "<label>Genero</label>"+ select_generos(0)+    
     "<button name='save-serie' type='submit' class='btn btn-primary'>Submit</input>"+  
     "</div>"+ 
 
@@ -389,6 +390,23 @@ jQuery.extend({
         return result;
     }
 });
+
+
+
+function select_generos(idSerie){    
+    var generos=$.getValues("GenerosServlet");  
+    var selectGeneros='<select name="genero_id">';
+    $.each(generos, function(index,genero){
+        select='';
+        if (genero.id == idSerie){
+            select='selected';
+        }
+        selectGeneros+='<option value="'+genero.id+'" '+select+'>'+genero.nombre+'</option>';
+    }
+    ); 
+    selectGeneros+='</select>';
+    return selectGeneros;
+}
 
 //http://www.emenia.es/lista-desplegable-y-plegable-con-jquery/
 

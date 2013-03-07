@@ -4,7 +4,8 @@
  */
 package Controlador.series;
 
-import ClasesDAO.DAOSeries;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import Pojos.Serie;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class Servlet extends HttpServlet {
         if (id.equalsIgnoreCase("all")) {
 
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
-            oListaSeries = DAOSeries.getSeries();
+            oListaSeries = GestorSeriesDAO.getInstance().getSeriesDAO().getSeries();
             String json = gson.toJson(oListaSeries);
             out.print(json);
         }
@@ -55,20 +56,20 @@ public class Servlet extends HttpServlet {
             } catch (InterruptedException e) {
             }
             int idInt = Integer.parseInt(id);
-            Serie serie = DAOSeries.getSerie(idInt);
+            Serie serie = GestorSeriesDAO.getInstance().getSeriesDAO().getSerie(idInt);
             String json = gson.toJson(serie);
             out.println(json);
         }
 
         if (id.equalsIgnoreCase("getrecords")) {
 
-            List<Pojos.Serie> oListaSeries = DAOSeries.getSeries();
+            List<Pojos.Serie> oListaSeries = GestorSeriesDAO.getInstance().getSeriesDAO().getSeries();
             out.print(gson.toJson(oListaSeries.size()));
         }
         if (id.equalsIgnoreCase("getpages")) {
 
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
-            oListaSeries = DAOSeries.getSeries();
+            oListaSeries = GestorSeriesDAO.getInstance().getSeriesDAO().getSeries();
             int div = oListaSeries.size() / numeroItemsPaginas;
             int resto = oListaSeries.size() % numeroItemsPaginas;
             if (resto > 0) {
@@ -79,7 +80,7 @@ public class Servlet extends HttpServlet {
         if (id.equalsIgnoreCase("getpage")) {
             Integer page = Integer.parseInt(request.getParameter("page"));
             List<Pojos.Serie> oListaSeries = new ArrayList<>();
-            oListaSeries = DAOSeries.getSeries();
+            oListaSeries = GestorSeriesDAO.getInstance().getSeriesDAO().getSeries();
             int desde=(page - 1) * numeroItemsPaginas;
             int hasta=(page * numeroItemsPaginas);
             if (hasta > oListaSeries.size()){

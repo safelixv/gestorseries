@@ -4,12 +4,14 @@
  */
 package Controlador.series;
 
-import ClasesDAO.ActoresDAOjdbc;
 import ClasesDAO.GestorSeriesDAO;
 import ClasesDAO.SeriesDAOjdbc;
-import Pojos.Serie;
+import Pojos.Genero;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Sofia Felix
+ * @author ACE
  */
-public class EliminarSerieServlet extends HttpServlet {
+public class GenerosServlet extends HttpServlet {
+    private Gson gson=new Gson();
 
     /**
      * Processes requests for both HTTP
@@ -34,12 +37,22 @@ public class EliminarSerieServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();                 
-        String id = request.getParameter("id");        
-        GestorSeriesDAO.getInstance().getSeriesDAO().eliminaSerie(Integer.parseInt(id));
-        out.print("Serie eliminada");
-        out.flush();
-        out.close();
+        PrintWriter out = response.getWriter();
+        try {
+            if (request.getParameter("id") != null){
+                String id=request.getParameter("id");
+                Genero genero = GestorSeriesDAO.getInstance().getSeriesDAO().getGenero(Integer.parseInt(id));
+                String json = gson.toJson(genero);
+                out.print(json);
+                
+            }else{
+            List<Genero> generos = new ArrayList<>();
+            generos = GestorSeriesDAO.getInstance().getSeriesDAO().getGeneros();
+            String json = gson.toJson(generos);
+            out.print(json);}
+        } finally {            
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

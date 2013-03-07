@@ -4,7 +4,8 @@
  */
 package Controlador.series;
 
-import ClasesDAO.DAOSeries;
+import ClasesDAO.GestorSeriesDAO;
+import ClasesDAO.SeriesDAOjdbc;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -35,7 +36,7 @@ public class AgregarActorSerieServlet extends HttpServlet {
         try {
           String serieId = request.getParameter("serie_id");
              String actorId = request.getParameter("actor_id");
-             DAOSeries.agregarActorSerie(serieId,actorId); 
+             GestorSeriesDAO.getInstance().getSeriesDAO().agregarActorSerie(serieId,actorId); 
              log("actor eliminado"+serieId+" "+actorId);
         } finally {            
             out.close();
