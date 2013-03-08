@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5
+-- version 3.5.5
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 07-03-2013 a las 11:18:29
--- Versión del servidor: 5.5.16
--- Versión de PHP: 5.3.8
+-- Servidor: localhost:3308
+-- Tiempo de generación: 07-03-2013 a las 21:43:25
+-- Versión del servidor: 5.5.29
+-- Versión de PHP: 5.4.11
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -34,14 +34,14 @@ CREATE TABLE IF NOT EXISTS `actores` (
   `fecha_nac` date NOT NULL,
   `lugar_nac` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `actores`
 --
 
 INSERT INTO `actores` (`id`, `nombre_actor`, `ape1_actor`, `ape2_actor`, `fecha_nac`, `lugar_nac`) VALUES
-(2, 'Josh 5', 'T', 'Radnor', '1974-07-29', 'Ohio'),
+(2, 'Josh', 'T', 'Radnor', '1974-07-29', 'Ohio'),
 (4, 'Alyson', 'Lee', 'Hannigan', '1974-03-24', 'DC'),
 (6, 'Jim', 'Joseph', 'Parsons', '1973-03-24', 'Texas'),
 (7, 'Josh', 'Lee', 'Holloway', '1969-07-20', 'California'),
@@ -51,10 +51,8 @@ INSERT INTO `actores` (`id`, `nombre_actor`, `ape1_actor`, `ape2_actor`, `fecha_
 (11, 'Andrew', 'James', 'Lincoln', '1973-09-14', 'England'),
 (12, 'Sarah', 'Wayne', 'Callies', '1977-06-01', 'Illinois'),
 (13, 'Daniel', 'Louis', 'Castellaneta', '1957-10-29', 'Illinois'),
-(14, 'Julie', 'Deborah', 'Kavner', '1950-09-07', 'California'),
-(15, 'aa 2', 'bb', 'cc', '2012-10-10', 'dd'),
-(16, 'hhh', 'hhh', 'hhh', '2012-12-12', 'oliva'),
-(17, 'ddddd', 'eeeee', 'fffff', '2012-12-12', 'fffff');
+(14, 'Julie2', 'Deborah', 'Kavner', '1950-09-07', 'California'),
+(18, 'Jennifer ', 'Blas', 'Lawrence', '0010-05-24', 'Utah');
 
 -- --------------------------------------------------------
 
@@ -94,20 +92,20 @@ CREATE TABLE IF NOT EXISTS `series` (
   `genero_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `genero_id` (`genero_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
 
 --
 -- Volcado de datos para la tabla `series`
 --
 
 INSERT INTO `series` (`id`, `nombre_serie`, `canal`, `temporadas`, `capitulos`, `año`, `genero_id`) VALUES
-(2, 'The Big Bang Theory 8', 'CBS', 8, 144, 2007, 1),
+(2, 'The Big Bang Theory', 'CBS', 8, 144, 2007, 1),
 (5, 'The Walking Dead', 'AMC', 3, 30, 2010, 1),
-(7, 'smallville', 'CBS', 10, 100, 12, 1),
+(7, 'Smallville', 'CBS', 10, 100, 2001, 5),
 (8, 'Juego de tronos', 'HBO', 2, 20, 2011, 1),
-(14, 'cuentame', 'tv1', 3, 15, 2001, 1),
-(15, 'lala', 'lala', 5, 5, 2013, 1),
-(16, 'El quijote', 'la 1', 10, 10, 2010, 2);
+(14, 'Cuentame', 'tv1', 3, 15, 2001, 1),
+(16, 'El quijote', 'la 1', 10, 10, 2010, 2),
+(17, 'Gossip Girl', 'The CW', 6, 203, 2005, 2);
 
 -- --------------------------------------------------------
 
@@ -120,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `series_actores` (
   `id_serie` int(10) DEFAULT NULL,
   `id_actor` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
 
 --
 -- Volcado de datos para la tabla `series_actores`
@@ -128,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `series_actores` (
 
 INSERT INTO `series_actores` (`id`, `id_serie`, `id_actor`) VALUES
 (1, 2, 1),
-(2, 2, 2),
 (3, 1, 3),
 (4, 1, 4),
 (5, 2, 5),
@@ -145,7 +142,11 @@ INSERT INTO `series_actores` (`id`, `id_serie`, `id_actor`) VALUES
 (20, 14, 2),
 (21, 5, 2),
 (22, 15, 2),
-(23, 2, 2);
+(24, 7, 6),
+(26, 5, 2),
+(28, 8, 2),
+(29, 17, 2),
+(30, 17, 2);
 
 -- --------------------------------------------------------
 
@@ -156,11 +157,7 @@ INSERT INTO `series_actores` (`id`, `id_serie`, `id_actor`) VALUES
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(6) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `ape1` varchar(255) CHARACTER SET ucs2 COLLATE ucs2_unicode_ci NOT NULL,
-  `ape2` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `telefono` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_tipo_usuario` int(6) NOT NULL,
+  `apellido` varchar(255) CHARACTER SET ucs2 COLLATE ucs2_unicode_ci NOT NULL,
   `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -170,14 +167,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `nombre`, `ape1`, `ape2`, `telefono`, `email`, `id_tipo_usuario`, `login`, `password`) VALUES
-(1, 'Anna', 'Ramada', 'Soto', '963258741', 'anna@soto.com', 1, 'annasoto', 'annasoto'),
-(2, 'Barbara', 'Picard', 'Sanchez', '965784256', 'barbara@picard.com', 1, 'bapicsan', 'bapicsan'),
-(3, 'Alicia', 'Navarro', 'Ramos', '965876932', 'alicia@navarro.com', 1, 'alinav', 'alinav'),
-(4, 'Elena', 'Garcia', 'Ortega', '965741269', 'elena@garcia.com', 1, 'elegaor', 'elegaor'),
-(5, 'Vicenta', 'Esteve', 'Ruiz', '961234567', 'vicenta@esteve.com', 2, 'vicenes', 'vicenes'),
-(6, 'Marta', 'Perez', 'Rubio', '987452647', 'marta@perez.com', 2, 'martape', 'martape'),
-(7, 'Sofia', 'Antonella', 'Felix', '963258741', 'sofia@felix.com', 1, 'sofiafelix92', 'administrador');
+INSERT INTO `usuario` (`id`, `nombre`, `apellido`, `login`, `password`) VALUES
+(1, 'Anna', 'Ramada', 'annasoto', 'annasoto'),
+(2, 'Barbara', 'Picard', 'bapicsan', 'bapicsan'),
+(3, 'Alicia', 'Navarro', 'alinav', 'alinav'),
+(4, 'Elena', 'Garcia', 'elegaor', 'elegaor'),
+(5, 'Vicenta', 'Esteve', 'vicenes', 'vicenes'),
+(6, 'Marta', 'Perez', 'martape', 'martape'),
+(7, 'Sofia', 'Antonella', 'sofiafelix92', 'administrador');
 
 --
 -- Restricciones para tablas volcadas

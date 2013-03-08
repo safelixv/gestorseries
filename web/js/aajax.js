@@ -8,7 +8,7 @@ if (ver=='actores'){
 }
 $(document).ready(function() {          
     $(".lista_actores").click(function() {   
-        alert("actores");
+       // alert("actores");
         listado_actores(numeroPagina)        
     });
     $(".lista_series").click(function() {    
@@ -21,3 +21,6 @@ $(document).ready(function() {
 // http://www.jqueryeasy.com/2012/05/19/filtrar-y-ordenar-una-tabla-mysql-con-ajax/
 // http://www.jqueryeasy.com/demos/filtro_tabla_mysql_ajax/index.php
 
+//calendarios
+// http://www.emenia.es/calendario-formulario-jquery/
+//http://www.mundonets.com/diseno-web/calendario-javascript-para-usar-en-formularios/

@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 public class Mysql {
 
     private static Connection conexion = null;
-    private static String url = "jdbc:mysql://localhost:3306/gestorseries"; //(3307clase y casa3308)  3306(an)
+    private static String url = "jdbc:mysql://localhost:3308/gestorseries"; //(3307clase y casa3308)  3306(an)
 
     public static void conexion() throws Exception {
         try {
@@ -260,6 +260,20 @@ public class Mysql {
 
    }
  
+     
+         public static ResultSet get(String consulta) throws Exception {
+        Statement stmt = null;
+        try {
+            stmt = (Statement) conexion.createStatement();
+            ResultSet rs = stmt.executeQuery(consulta);
+
+            return rs;
+
+        } catch (Exception e) {
+            throw new Exception("mysql.getPage: Error en la consulta: "
+                    + e.getMessage());
+        }
+    }
     
     
     

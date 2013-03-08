@@ -1,3 +1,5 @@
+//-------------------LISTADO DE SERIES + CLIC.BOTONES
+
 function listado_series(pageNumber){          
     var pages= $.getValues("Servlet?id=getpages");    
     var series=$.getValues("Servlet?id=getpage&page="+pageNumber);    
@@ -34,7 +36,8 @@ function listado_series(pageNumber){
         tabla +=             "<a class='btn ver_actores_serie' href=\"#myModal\" data-toggle=\"modal\" data-id="+serie.id+"><i class='icon-eye-open'></i> <strong>Actores</strong></a>"
         tabla +=        "</td>"                                      
         tabla +=  "</tr>";                   
-    });     
+    });
+    ajaxCallSync
     
     tabla +=    "</table>"; 
 
@@ -43,13 +46,13 @@ function listado_series(pageNumber){
     tabla +=       "<strong>Nueva Serie</strong>"
     tabla +=   "</a>"
             
-            
+    //paginacion       
     tabla +=  getNeighborhood("index.jsp?ver=series&pagenumber=", pageNumber, pages, 10); 
     
     $("#divtabla").empty();
     $("#divtabla").append(tabla);                                                      
     $(".ver_serie").click(function(){                
-        detalle_serie($(this).data('id'))                        
+        ver_serie($(this).data('id'))                        
     });                 
     $(".editar_serie").click(function(){
         editar_serie($(this).data('id'))       
@@ -64,12 +67,16 @@ function listado_series(pageNumber){
         ver_actores_serie($(this).data('id'))
     });
     $(".nueva_serie").click( function(){
-        crear_serie()
+        nueva_serie()
     });
     
 }
 
-function detalle_serie(id){            
+//------------- FIN LISTADO Y BOTONES----------------------------------------
+
+
+//VER SERIE
+function ver_serie(id){            
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");
     $.ajax({                    
         url: 'Servlet?id='+id, 
@@ -112,70 +119,9 @@ function detalle_serie(id){
         }            
     });    
 }
-function eliminar_actor_serie(id_serie,id_actor){ 
-    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
-    $.ajax({                    
-        url: 'EliminarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
-        dataType: 'text',
-        type: "POST",
-        success: 
-        function(text){                        
-            $("#modal_cuerpo").empty(); 
-            $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
-            listado_series(0);
-        },      
-        error: function(){                
-            if(id ==""){                    
-                $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
-            }
-        }            
-    });  
- 
-    
-}
-function agregar_actor_serie(id_serie,id_actor){   
-    alert(id_serie+":"+id_actor);
-    $.ajax({                    
-        url: 'AgregarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
-        dataType: 'text',
-        type: "POST",
-        success: 
-        function(text){                        
-            listado_series(0);
-        },      
-        error: function(){                
-            if(id ==""){                    
-                $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
-            }
-        }            
-    });  
- 
-    
-}
 
 
-function eliminar_serie(id){   
-    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
-    $.ajax({                    
-        url: 'EliminarSerieServlet?id='+id, //8088 casa - 8884clase
-        dataType: 'text',
-        type: "POST",
-        success: 
-        function(text){                                    
-            listado_series(0);
-        },      
-        error: function(){                
-            if(id ==""){                    
-                $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
-            }
-        }            
-    });  
- 
-}
-
+//EDITAR SERIE
 function editar_serie(id){   
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");
     $.ajax({                    
@@ -217,7 +163,7 @@ function editar_serie(id){
         error: function(){
                 
             if(id == ""){                    
-                $("#modal_cuerpo").empty(); 
+                $("#modal_uerpo").empty(); 
                 $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");
                     
             }
@@ -225,7 +171,30 @@ function editar_serie(id){
     });        
 }
 
-function crear_serie()
+// ELIMINAR SERIE
+function eliminar_serie(id){   
+    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
+    $.ajax({                    
+        url: 'EliminarSerieServlet?id='+id, //8088 casa - 8884clase
+        dataType: 'text',
+        type: "POST",
+        success: 
+        function(text){                                    
+            listado_series(0);
+        },      
+        error: function(){                
+            if(id ==""){                    
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+            }
+        }            
+    });  
+ 
+}
+
+
+//NUEVA SERIE
+function nueva_serie()
 {        
     $("#modal_cuerpo").empty();    
     var form =
@@ -250,7 +219,8 @@ function crear_serie()
     $("#modal_cuerpo").append(form);      
 }          
          
-         
+//------------------------INICIO MODAL VER ACTORES_SERIE--------------------------     
+
 function ver_actores_serie(id){
     $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='cargando...' />");    
     var actores=$.getValues("ActoresSerieServlet?id="+id);     
@@ -266,7 +236,8 @@ function ver_actores_serie(id){
         tabla +=       "<th>Apellido</th>"    
         tabla +=       "<th>Opciones</th>" 
         tabla += "</tr>"          
-        $.each(actores, function(index, actor) {            
+        $.each(actores, function(index, actor) {      
+            
             tabla += "<tr>"                
             tabla +=        "<td>"
             tabla +=            "<p>" +actor.id+"</p>"
@@ -278,135 +249,210 @@ function ver_actores_serie(id){
             tabla +=            "<p>" +actor.ape2+"</p>"
             tabla +=        "</td>"
             tabla +=        "<td>"
-            tabla +=          "<a class='btn eliminar_actor_serie' data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Eliminar</strong></a>"
+            tabla +=          "<a class='btn eliminar_actor_serie' href=\"#myModal\" data-toggle=\"modal\" data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Eliminar</strong></a>"
             tabla +=        "</td>"
-            tabla += "</tr>"                     
-        });                
+            tabla += "</tr>" 
+            
+        });  
+        
+        
         tabla +=    "</table>";             
-        tabla += "<div>"                       
-        tabla +=        "<button > Agregar Actor </button>"                            
-        tabla +=          "<table id='tabla_actores' cellpadding='7' width='40%' border='1' align='center'>"
-        tabla +=          "<thead>"
-        tabla +=          "<tr>"
-        tabla +=          "<th>Nombre</th>"
-        tabla +=          "<th>Apellido</th>"		        
-        tabla +=          "<th>Opciones</th>"
-        tabla +=          "</tr>"
-        tabla +=          "</thead>"
-        tabla +=          "<tbody>"     
-        var actores2=$.getValues("ServletActores?id=all"); 
-        $.each(actores2, function(index, actor) {            
-            tabla += "<tr>"                
-            tabla +=        "<td>"
-            tabla +=            "<p>" +actor.nombre+"</p>"
-            tabla +=        "</td>"                                                         
-            tabla +=        "<td>"
-            tabla +=            "<p>" +actor.ape2+"</p>"
-            tabla +=        "</td>"
-            tabla +=        "<td>"
-            tabla +=          "<a class='btn agregar_actor_serie' data-serie_id="+id+" data-actor_id="+actor.id+"><strong>Agregar</strong></a>"
-            tabla +=        "</td>"
-            tabla += "</tr>"                
-        });        
-
-        tabla +=        "</td>"
-        tabla += "</tr>"                                                         
-        tabla +=          "</tbody>"
-        tabla +=          "</table>"                                                 
+        tabla += "<div>"                        
+        tabla +=        "<button class='btn agregar_actor' href=\"#myModal2\" data-toggle=\"modal\"> Agregar Actor </button>"
         tabla +=  "</div>"  
-                                                                                        
+        tabla += '<div id="myModal2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+        tabla += '    <div class="modal-header">';
+        tabla += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>';
+        tabla += '        <h4 id="modal_cabecera">Actores Serie </h4>';
+        tabla += '        </div>';
+        tabla += '    <div class="modal-body" id="modal_cuerpo2">';            
+        tabla += '    </div>';
+        tabla += '    <div class="modal-footer">';
+        tabla += '             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>';
+        tabla += '    </div>';
+        tabla += '</div>';    
+            
     }
-            
-            
-      
-    $("#modal_cuerpo").append(tabla);                                                    
-    $(".eliminar_actor_serie").click(function(){                
-        eliminar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
-        ver_actores_serie(id);
-    }); 
-    $(".agregar_actor_serie").click(function(){          
-        agregar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
-        ver_actores_serie(id);
-    });    
-            
-    $(document).ready(function(){
-        $("#tabla_actores").hide();
-        $("button").click(function(event){
-            var desplegable = $(this).next();
-            $('.tabla_actores').not(desplegable).slideUp('fast');
-            desplegable.slideToggle('fast');
-            event.preventDefault();
-        })
-    });
-            
-            
-                              
-
-}        
+        //BOTONES AGREGAR, ELIMINAR Y AGREGAR_ACTOR      
+        $("#modal_cuerpo").append(tabla);  
+        
+        
+        $(".agregar_actor_serie").click(function(){          
+            agregar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
+            ver_actores_serie(id);
+        }); 
+        
+        
+        $(".eliminar_actor_serie").click(function(){                
+            eliminar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))
+            ver_actores_serie(id);
+        }); 
+          
+        $(".agregar_actor").click(function(){                
+            mostrar_actores_serie_seleccion(id);
+        }); 
     
-function getNeighborhood(link,  page_number, total_pages, neighborhood) { 
-    page_number=parseInt(page_number);
-    total_pages=parseInt(total_pages);
-    neighborhood=parseInt(neighborhood);
-    vector = "<div class=\"pagination\"><ul>";
-    if (page_number > 1)
-        vector+=("<li><a class=\"pagination_link\" id=\"" + (page_number - 1) + "\" href=\"" + link + (page_number - 1) + "\">prev</a></li>");
-    if (page_number > neighborhood + 1)
-        vector+=("<li><a class=\"pagination_link\" id=\"1\" href=\"" + link + "1\">1</a></li>");
-    if (page_number > neighborhood + 2)
-        vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
-    for (i = (page_number - neighborhood); i <= (page_number + neighborhood); i++){
-        if (i >= 1 && i <= total_pages){
-            if (page_number == i){
-                vector+=("<li class=\"active\"><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link +     i + "\">" + i + "</a></li>");
-            }            
-            else
-                vector+=("<li><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link + i + "\">" + i + "</a></li>");
-        }
+        
+                             
     }
-    if (page_number < total_pages - (neighborhood + 1))
-        vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
-    if (page_number < total_pages - (neighborhood))
-        vector+=("<li><a class=\"pagination_link\" id=\"" + total_pages + "\" href=\"" + link + total_pages + "\">" + total_pages + "</a></li>");
-    if (page_number < total_pages)
-        vector+=("<li><a class=\"pagination_link\"  id=\"" + (page_number + 1) + "\" href=\"" + link + (page_number + 1) + "\">next</a></li>");        
-    vector += "</ul></div>";
-    return vector;
-}           
 
+    
+    //  ------------- FIN MODAL ---------------
+ 
+ 
+ function mostrar_actores_serie_seleccion(id){
+      
+    var tabla =          "<table id='tabla_actores' class='tablaseries table table-hover' align='center'>"
+    tabla +=          "<thead>"
+    tabla +=          "<tr>"
+    tabla +=          "<th>Nombre</th>"
+    tabla +=          "<th>Apellido</th>"		        
+    tabla +=          "<th>Opciones</th>"
+    tabla +=          "</tr>"
+    tabla +=          "</thead>"
+    tabla +=          "<tbody>"     
+    var actores=$.getValues("ServletActores?id=all"); 
+    $.each(actores, function(index, actor) {            
+        tabla += "<tr>"                
+        tabla +=        "<td>"
+        tabla +=            "<p>" +actor.nombre+"</p>"
+        tabla +=        "</td>"                   
+        tabla +=        "<td>"
+        tabla +=            "<p>" +actor.ape2+"</p>"
+        tabla +=        "</td>"                                                         
+            
+        tabla +=        "<td>"
+        tabla +=          "<a class='btn agregar_actor_serie' data-actor_id="+serie.id+" data-serie_id="+id+"><strong>Agregar</strong></a>"
+        tabla +=        "</td>"
+        tabla += "</tr>"                
+    });        
 
-jQuery.extend({
-    getValues: function(url) {
-        var result = null;
-        $.ajax({
-            url: url,
-            type: 'get',
-            dataType: 'json',
-            async: false,
-            success: function(data) {
-                result = data;
-            }
-        });
-        return result;
-    }
-});
-
-
-
-function select_generos(idSerie){    
-    var generos=$.getValues("GenerosServlet");  
-    var selectGeneros='<select name="genero_id">';
-    $.each(generos, function(index,genero){
-        select='';
-        if (genero.id == idSerie){
-            select='selected';
-        }
-        selectGeneros+='<option value="'+genero.id+'" '+select+'>'+genero.nombre+'</option>';
-    }
-    ); 
-    selectGeneros+='</select>';
-    return selectGeneros;
+    tabla +=        "</td>"
+    tabla += "</tr>"                                                         
+    tabla +=          "</tbody>"
+    tabla +=          "</table>"                                                 
+    tabla +=  "</div>"  
+    $("#modal_cuerpo2").empty();
+    $("#modal_cuerpo2").append(tabla);
+         
+    $(".agregar_actor_serie").click(function(){          
+        agregar_actor_serie($(this).data('actor_id'),$(this).data('serie_id'))
+        ver_series_actor(id);
+    });    
 }
+ 
+ 
+ 
+    function agregar_actor_serie(id_serie,id_actor){   
+        alert(id_serie+":"+id_actor);
+        $.ajax({                    
+            url: 'AgregarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
+            dataType: 'text',
+            type: "POST",
+            success: 
+            function(text){                        
+                listado_series(0);
+            },      
+            error: function(){                
+                if(id ==""){                    
+                    $("#modal_cuerpo").empty(); 
+                    $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+                }
+            }            
+        });  
+ 
+    }
+ 
+    function eliminar_actor_serie(id_serie,id_actor){ 
+        $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
+        $.ajax({                    
+            url: 'EliminarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
+            dataType: 'text',
+            type: "POST",
+            success: 
+            function(text){                        
+                $("#modal_cuerpo").empty(); 
+                $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
+                listado_series(0);
+            },      
+            error: function(){                
+                if(id ==""){                    
+                    $("#modal_cuerpo").empty(); 
+                    $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
+                }
+            }            
+        });  
+ 
+    
+    }
+
+
+    
+    
+    // PAGINACION    
+    function getNeighborhood(link,  page_number, total_pages, neighborhood) { 
+        page_number=parseInt(page_number);
+        total_pages=parseInt(total_pages);
+        neighborhood=parseInt(neighborhood);
+        vector = "<div class=\"pagination\"><ul>";
+        if (page_number > 1)
+            vector+=("<li><a class=\"pagination_link\" id=\"" + (page_number - 1) + "\" href=\"" + link + (page_number - 1) + "\">prev</a></li>");
+        if (page_number > neighborhood + 1)
+            vector+=("<li><a class=\"pagination_link\" id=\"1\" href=\"" + link + "1\">1</a></li>");
+        if (page_number > neighborhood + 2)
+            vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
+        for (i = (page_number - neighborhood); i <= (page_number + neighborhood); i++){
+            if (i >= 1 && i <= total_pages){
+                if (page_number == i){
+                    vector+=("<li class=\"active\"><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link +     i + "\">" + i + "</a></li>");
+                }            
+                else
+                    vector+=("<li><a class=\"pagination_link\" id=\"" + i + "\" href=\"" + link + i + "\">" + i + "</a></li>");
+            }
+        }
+        if (page_number < total_pages - (neighborhood + 1))
+            vector+=("<li>" + "<a href=\"#\">...</a>" + "</li>");
+        if (page_number < total_pages - (neighborhood))
+            vector+=("<li><a class=\"pagination_link\" id=\"" + total_pages + "\" href=\"" + link + total_pages + "\">" + total_pages + "</a></li>");
+        if (page_number < total_pages)
+            vector+=("<li><a class=\"pagination_link\"  id=\"" + (page_number + 1) + "\" href=\"" + link + (page_number + 1) + "\">next</a></li>");        
+        vector += "</ul></div>";
+        return vector;
+    }           
+
+    // ------------- AJAX
+    jQuery.extend({
+        getValues: function(url) {
+            var result = null;
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                async: false,
+                success: function(data) {
+                    result = data;
+                }
+            });
+            return result;
+        }
+    });
+
+
+    // ------- RELACION UNO A MUCHOS-----------------------
+    function select_generos(idSerie){    
+        var generos=$.getValues("GenerosServlet");  
+        var selectGeneros='<select name="genero_id">';
+        $.each(generos, function(index,genero){
+            select='';
+            if (genero.id == idSerie){
+                select='selected';
+            }
+            selectGeneros+='<option value="'+genero.id+'" '+select+'>'+genero.nombre+'</option>';
+        }
+        ); 
+        selectGeneros+='</select>';
+        return selectGeneros;
+    }
 
 //http://www.emenia.es/lista-desplegable-y-plegable-con-jquery/
 
