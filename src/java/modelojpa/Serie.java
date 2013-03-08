@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 @Entity
 @Table(name = "series")

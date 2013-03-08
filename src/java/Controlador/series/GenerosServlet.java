@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 public class GenerosServlet extends HttpServlet {
     private Gson gson=new Gson();

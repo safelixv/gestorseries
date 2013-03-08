@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 public class AgregarSerieActorServlet extends HttpServlet {
 

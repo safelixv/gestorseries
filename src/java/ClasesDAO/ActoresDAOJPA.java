@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 public class ActoresDAOJPA implements ActoresDAO{
     private EntityManager em;

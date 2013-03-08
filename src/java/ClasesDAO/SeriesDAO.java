@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author ACE
+ * @author Sofia
  */
 public interface SeriesDAO {
 

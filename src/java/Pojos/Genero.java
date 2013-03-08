@@ -6,7 +6,7 @@ package Pojos;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 public class Genero {
     private Integer id;

@@ -6,7 +6,7 @@ package ClasesDAO;
 
 /**
  *
- * @author ACE
+ * @author Sofia Felix
  */
 public class GestorSeriesDAO {
    private static GestorSeriesDAO instance=null;
