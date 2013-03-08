@@ -23,7 +23,7 @@ public class LoginDAO {
             Mysql.conexion();
             String consulta = "SELECT * FROM usuario WHERE login ='" + autentificacion.getLogin()
                     + "'  AND PASSWORD ='" + autentificacion.getPassword() + "'";
-            ResultSet rs = Mysql.get(consulta);
+        
             ResultSet result = Mysql.get(consulta);
             if (result.next()) {
 

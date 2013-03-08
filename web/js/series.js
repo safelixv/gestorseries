@@ -322,7 +322,7 @@ function ver_actores_serie(id){
         tabla +=        "</td>"                                                         
             
         tabla +=        "<td>"
-        tabla +=          "<a class='btn agregar_actor_serie' data-actor_id="+serie.id+" data-serie_id="+id+"><strong>Agregar</strong></a>"
+        tabla +=          "<a class='btn agregar_actor_serie' data-actor_id="+actor.id+" data-serie_id="+id+"><strong>Agregar</strong></a>"
         tabla +=        "</td>"
         tabla += "</tr>"                
     });        
@@ -336,22 +336,20 @@ function ver_actores_serie(id){
     $("#modal_cuerpo2").append(tabla);
          
     $(".agregar_actor_serie").click(function(){          
-        agregar_actor_serie($(this).data('actor_id'),$(this).data('serie_id'))
-        ver_series_actor(id);
+        agregar_actor_serie($(this).data('serie_id'),$(this).data('actor_id'))        
     });    
 }
  
  
  
-    function agregar_actor_serie(id_serie,id_actor){   
-        alert(id_serie+":"+id_actor);
+    function agregar_actor_serie(id_serie,id_actor){           
         $.ajax({                    
             url: 'AgregarActorSerieServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
             dataType: 'text',
             type: "POST",
             success: 
             function(text){                        
-                listado_series(0);
+                
             },      
             error: function(){                
                 if(id ==""){                    
@@ -360,6 +358,7 @@ function ver_actores_serie(id){
                 }
             }            
         });  
+        ver_actores_serie(id_serie);
  
     }
  

@@ -38,7 +38,6 @@ public class EliminarActorSerieServlet extends HttpServlet {
              String actorId = request.getParameter("actor_id");
              GestorSeriesDAO.getInstance().getSeriesDAO().eliminarActorSerie(serieId,actorId); 
              log("actor eliminado"+serieId+" "+actorId);
-
              out.print("Actor eliminado");
         } finally {            
             out.close();

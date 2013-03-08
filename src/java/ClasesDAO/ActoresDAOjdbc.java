@@ -87,6 +87,7 @@ public class ActoresDAOjdbc implements ActoresDAO {
         try {
             Mysql.conexion();
             Mysql.removeOne(id, "actores");
+            Mysql.execSQL("DELETE FROM series_actores where actor_id="+id);
             Mysql.desconexion();
             Mysql.commitTrans();
         } catch (Exception ex) {
@@ -138,8 +139,8 @@ public class ActoresDAOjdbc implements ActoresDAO {
     public  void eliminarSerieActor(String serieId, String actorId) {
         try {
             Mysql.conexion();
-            ResultSet rs = Mysql.execSQL("SELECT id FROM ACTORES_SERIES WHERE id_actor = " + actorId + " and id_serie = " + serieId);
-            Mysql.removeOne(rs.getInt("id"), "ACTORES_SERIES");
+            ResultSet rs = Mysql.execSQL("SELECT id FROM series_actores WHERE id_actor = " + actorId + " and id_serie = " + serieId);
+            Mysql.removeOne(rs.getInt("id"), "series_actores");
             Mysql.desconexion();
         } catch (Exception ex) {
             Logger.getLogger(ActoresDAOjdbc.class.getName()).log(Level.SEVERE, null, ex);

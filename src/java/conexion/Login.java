@@ -32,32 +32,33 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-       protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         PojoLogin pojo = new PojoLogin();
         String operation = request.getParameter("accion");
-        if(!"salir".equals(operation)){
-        try {
-            String user = request.getParameter("usuario");
-            session.getAttribute(user);
-            String pass = request.getParameter("password");
-            pojo.setLogin(user);
-            pojo.setPassword(pass);
-            pojo = LoginDAO.loginUser(pojo);
-            if (pojo.getId() != 0) {
-                session.setAttribute("usuario", pojo);
-                response.sendRedirect("index.jsp");
-            } else {
-                response.sendRedirect("login.jsp");
+        if (!"salir".equals(operation)) {
+            try {
+                String user = request.getParameter("login");
+                session.getAttribute(user);
+                String pass = request.getParameter("password");
+                pojo.setLogin(user);
+                pojo.setPassword(pass);
+                pojo = LoginDAO.loginUser(pojo);
+                if (pojo.getId() != 0) {
+                    session.setAttribute("usuario", pojo);
+                    response.sendRedirect("index.jsp");
+                } else {
+                    response.sendRedirect("login.jsp");
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
 
-        } catch (Exception ex) {
-        }
-
-    }else{
+        } else {
             session.invalidate();
             response.sendRedirect("login.jsp");
         }

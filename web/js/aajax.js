@@ -8,11 +8,12 @@ if (ver=='actores'){
 }
 $(document).ready(function() {          
     $(".lista_actores").click(function() {   
-       // alert("actores");
-        listado_actores(numeroPagina)        
+        
+        listado_actores(1)        
     });
     $(".lista_series").click(function() {    
-        listado_series(numeroPagina)        
+        
+        listado_series(1)        
     });
     
 });

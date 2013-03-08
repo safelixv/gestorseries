@@ -86,7 +86,5 @@ public class PojoLogin {
         this.password = password;
     }
 
-    public void setId(int aInt) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
+    
 }

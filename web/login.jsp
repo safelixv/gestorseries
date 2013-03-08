@@ -20,8 +20,7 @@
         String login = "";
         if (session.getAttribute("login") != null) {
             login = session.getAttribute("login").toString();
-        }
-        System.out.println(login);
+        }        
     %> 
     <body class="login">
         
@@ -31,7 +30,7 @@
         </div>
         <div id="formulario">
                    
-            <form class="form-horizontal" action="/ProyectoSeries" method="post">
+            <form class="form-horizontal" action="Login" method="post">
                 <div class="control-group">
                     <label class="control-label">Nombre de Usuario</label>
                     <div class="controls">

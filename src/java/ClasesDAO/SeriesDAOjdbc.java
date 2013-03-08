@@ -89,6 +89,7 @@ public class SeriesDAOjdbc implements SeriesDAO {
         try {
             Mysql.conexion();
             Mysql.removeOne(id, "series");
+            Mysql.execSQL("DELETE FROM series_actores where serie_id="+id);
             Mysql.desconexion();
             Mysql.commitTrans();
         } catch (Exception ex) {

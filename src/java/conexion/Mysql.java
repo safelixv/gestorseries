@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 public class Mysql {
 
     private static Connection conexion = null;
-    private static String url = "jdbc:mysql://localhost:3308/gestorseries"; //(3307clase y casa3308)  3306(an)
+    private static String url = "jdbc:mysql://localhost:3306/gestorseries"; //(3307clase y casa3308)  3306(an)
 
     public static void conexion() throws Exception {
         try {

@@ -170,8 +170,7 @@ function editar_actor(id){
 
 //ELIMINAR ACTOR ----------
 function eliminar_actor(id){   
-    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
-    alert("eliminar:"+id);
+    $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");    
     $.ajax({                    
         url: 'EliminarActorServlet?id='+id, 
         dataType: 'text',
@@ -342,12 +341,11 @@ function mostrar_series_actor_seleccion(id){
          
     $(".agregar_serie_actor").click(function(){          
         agregar_serie_actor($(this).data('serie_id'),$(this).data('actor_id'))
-        ver_actores_serie(id);
+        ver_series_actor(id);
     });    
 }
 
-function agregar_serie_actor(id_serie,id_actor){   
-    alert(id_serie+":"+id_actor);
+function agregar_serie_actor(id_serie,id_actor){       
     $.ajax({                    
         url: 'AgregarSerieActorServlet?serie_id='+id_serie+'&actor_id=+'+id_actor, 
         dataType: 'text',
@@ -370,27 +368,23 @@ function agregar_serie_actor(id_serie,id_actor){
 
 
  
-    function eliminar_serie_actor(id_actor,id_serie){ 
-        $("#modal_cuerpo").html("<img src='img/loading.gif' width=40 height=40 alt='eliminando...' />");
+    function eliminar_serie_actor(id_actor,id_serie){       
         $.ajax({                    
-            url: 'EliminarSerieActorServlet?actor_id='+id_actor+'&serue_id=+'+id_serie, 
+            url: 'EliminarSerieActorServlet?actor_id='+id_actor+'&serie_id=+'+id_serie, 
             dataType: 'text',
             type: "POST",
             success: 
             function(text){                        
                 $("#modal_cuerpo").empty(); 
-                $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                  
-                listado_actores(0);
+                $("#modal_cuerpo").append("<p>"+text+"</p>");                                                                                                  
             },      
-            error: function(){                
-                if(id ==""){                    
-                    $("#modal_cuerpo").empty(); 
-                    $("#modal_cuerpo").append("<p>Debe introducir un id.</p>");                    
-                }
+            error: function(xhr, ajaxOptions, thrownError){                
+                alert("error:"+thrownError);                
             }            
         });  
- 
-    
+          $("#modal_cuerpo").empty(); 
+          $("#modal_cuerpo").append("<p>eliminado</p>");     
+             
     }
     
     

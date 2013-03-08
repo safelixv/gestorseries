@@ -13,7 +13,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>        
+    <head>      
+                     
+                 <%
+
+                HttpSession sesion = request.getSession();
+                //si no se inicia sesión, redirecciona a la pagina de login
+                PojoLogin login = (PojoLogin) sesion.getAttribute("usuario");
+                if (login == null) {
+                    response.sendRedirect("login.jsp");
+
+                } else {
+         %>  
         <script>
             var numeroPagina=<% if (request.getParameter("pagenumber") != null) {
                     out.print(request.getParameter("pagenumber"));
@@ -27,17 +38,7 @@
                     out.print("'series'");
                 }%>;
                        
-                       
-            <%--        <%
-
-                HttpSession sesion = request.getSession();
-                //si no se inicia sesión, redirecciona a la pagina de login
-                PojoLogin login = (PojoLogin) sesion.getAttribute("login");
-                if (login == null) {
-                    response.sendRedirect("index.jsp");
-
-                } else {
-         %>  --%> 
+          
                 
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -116,9 +117,9 @@ jQuery(function($){
         <script src="js/series.js"></script>
         <script src="js/aajax.js"></script>
 
-        <%--      <%
+              <%
           }
-      %> --%> 
+      %> 
 
     </body>
 </html>
